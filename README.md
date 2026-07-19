@@ -1,53 +1,49 @@
-# Vertex AI Studio Frontend App with Node.js Backend
+# Karan Goel Portfolio
 
-This repository contains a frontend and a Node.js backend, designed to run together.
-The backend acts as a proxy, handling Google Cloud API calls.
+This repository contains a personal portfolio site built with React, TypeScript, and Vite. It is designed to run locally for development and to be published as a static site on GitHub Pages.
 
-This project is intended for demonstration and prototyping purposes only.
-It is not intended for use in a production environment.
+## Features
 
-## Prerequisites
-
-To run this application locally, you need:
-
-*   **[Google Cloud SDK / gcloud CLI](https://cloud.google.com/sdk/docs/install)**: Follow the instructions to install the SDK.
-
-*   **gcloud Initialization**:
-    *   Initialize the gcloud CLI:
-        ```bash
-        gcloud init
-        ```
-    *   Authenticate for Application Default Credentials (needed to call Google Cloud APIs):
-        ```bash
-        gcloud auth application-default login
-        ```
-
-*   **Node.js and npm**: Ensure you have Node.js and its package manager, `npm`, installed on your machine.
+- Responsive portfolio layout
+- Resume-style content sections
+- Static site generation for GitHub Pages
+- Local development server with frontend and backend support
 
 ## Project Structure
 
-The project is organized into two main directories:
+- `frontend/`: React frontend application
+- `backend/`: Node.js backend for proxy-related functionality
+- `.github/workflows/`: GitHub Actions workflow for publishing to GitHub Pages
 
-*   `frontend/`: Contains the Frontend application code.
-*   `backend/`: Contains the Node.js/Express server code to proxy Google Cloud API calls.
+## Development
 
-## Backend Environment Variables
-
-The `backend/.env.local` file is automatically generated when you download this application.
-It contains essential Google Cloud environment variables pre-configured based on your project settings at the time of download.
-
-The variables set in `backend/.env.local` are:
-*   `API_BACKEND_PORT`: The port the backend API server listens on (e.g., `5000`).
-*   `API_PAYLOAD_MAX_SIZE`: The maximum size of the request payload accepted by the backend server (e.g., `5mb`).
-*   `GOOGLE_CLOUD_LOCATION`: The Google Cloud region associated with your project.
-*   `GOOGLE_CLOUD_PROJECT`: Your Google Cloud Project ID.
-
-**Note:** These variables are automatically populated during the download process.
-You can modify the values in `backend/.env.local` if you need to change them.
-
-## Installation and Running the App
-
-To install dependencies and run your Google Cloud Vertex AI Studio App locally, execute the following command:
+Install dependencies:
 
 ```bash
-npm install && npm run dev
+npm install
+```
+
+Start the local development environment:
+
+```bash
+npm run dev
+```
+
+Build the static production site:
+
+```bash
+npm run build
+```
+
+## GitHub Pages Deployment
+
+The site is configured to build as a static app and publish to GitHub Pages.
+
+1. Push changes to the `main` branch.
+2. Ensure GitHub Pages is enabled in the repository settings.
+3. Select the GitHub Actions deployment source.
+4. The workflow in `.github/workflows/deploy.yml` will publish the site automatically.
+
+## Notes
+
+The frontend build output is generated in `frontend/dist/` and is suitable for static hosting.
