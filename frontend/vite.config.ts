@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  base: '/karan-goel-portfolio/',
+  base: './',
   define: {
     // This is just a generic value for the Gemini API key.
     // This is not used at all, and can be ignored.
