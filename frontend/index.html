@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karan Goel - Software Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        retro: {
+                            bg: '#efefef',
+                            panel: '#ffffff',
+                            border: '#aaaaaa',
+                            link: '#0000ee',
+                            linkHover: '#ff0000',
+                            text: '#000000',
+                            accent: '#cc0000',
+                            header: '#e5e5e5',
+                            muted: '#666666'
+                        },
+                        resume: {
+                            primary: '#111827',
+                            secondary: '#4b5563',
+                            accent: '#2b7a78' // The teal/blue color from the original resume
+                        }
+                    },
+                    fontFamily: {
+                        'retro': ['"MS PGothic"', '"Mona"', '"IPAMonaPGothic"', 'Arial', 'sans-serif'],
+                        'mono': ['"MS Gothic"', 'Courier', 'monospace'],
+                        'resume': ['Arial', 'Helvetica', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+        <style>
+        /* Force classic aliasing feel and link behaviors for screen */
+        @media screen {
+            body {
+                -webkit-font-smoothing: none;
+                -moz-osx-font-smoothing: grayscale;
+            }
+            a { text-decoration: underline; }
+        }
+        
+        /* Print styles for saving as PDF */
+        @media print {
+            @page {
+                margin: 0.5in;
+                size: letter;
+            }
+            body {
+                background-color: #ffffff !important;
+                padding: 0 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            /* Ensure page breaks don't cut items in half */
+            .print-break-inside-avoid {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body class="bg-retro-bg text-retro-text font-retro text-[14px] leading-relaxed p-2 sm:p-4 md:p-8 print:p-0 print:bg-white">
+    <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
+<script type="module" src="/index.js"></script></body>
+</html>
