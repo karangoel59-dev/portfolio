@@ -23,41 +23,34 @@ export const GithubProjects: React.FC<GithubProjectsProps> = ({ repos, loading, 
     return (
         <div>
             {repos.map(repo => (
-                <div key={repo.id} className="mb-5 pb-5 border-b border-dashed border-retro-border last:border-0 last:mb-0 last:pb-0">
-                    <div className="mb-2 flex flex-wrap items-baseline gap-x-2 text-[14px]">
-                        <span className="font-bold text-retro-accent">⇒ {repo.name}</span>
-                        <span className="text-retro-muted text-[12px]">
-                            [{new Date(repo.updated_at).toISOString().split('T')[0]}]
+                <article key={repo.id} className="mb-6 pb-6 border-b border-dotted border-retro-border last:border-0 last:mb-0 last:pb-0">
+                    <header className="mb-1 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
+                        <h3 className="text-[17px] font-bold text-retro-accent">
+                            <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="hover:text-retro-linkHover hover:underline">
+                                {repo.name}
+                            </a>
+                        </h3>
+                        <span className="text-[12px] text-retro-muted whitespace-nowrap">
+                            updated {new Date(repo.updated_at).toISOString().split('T')[0]}
                         </span>
-                        <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="text-retro-link hover:text-retro-linkHover text-[12px]">
-                            [Repo]
-                        </a>
+                    </header>
+
+                    <div className="mb-2 flex flex-wrap items-center gap-1.5">
+                        {repo.language && (
+                            <span className="bg-retro-tag border border-retro-tagBorder px-2 py-0.5 text-[11px] text-retro-muted">
+                                {repo.language}
+                            </span>
+                        )}
+                        <span className="text-[12px] text-retro-muted">★ {repo.stargazers_count} · ⑂ {repo.forks_count}</span>
                         {repo.homepage && (
-                            <a href={repo.homepage} target="_blank" rel="noopener noreferrer" className="text-retro-link hover:text-retro-linkHover text-[12px]">
-                                [Demo]
+                            <a href={repo.homepage} target="_blank" rel="noopener noreferrer" className="text-[12px] text-retro-link hover:text-retro-linkHover hover:underline">
+                                [Live Demo]
                             </a>
                         )}
                     </div>
 
-                    <div className="pl-2 sm:pl-4 mb-3">
-                        {repo.language && (
-                            <div className="inline-block bg-[#f8f8f8] border border-[#cccccc] px-2 py-0.5 text-[12px] font-mono mb-2">
-                                Lang: {repo.language}
-                            </div>
-                        )}
-                        
-                        <div className="space-y-1">
-                            <div className="flex items-start">
-                                <span className="mr-1 text-retro-muted">・</span>
-                                <span>{repo.description || 'No description provided.'}</span>
-                            </div>
-                            <div className="flex items-start text-[12px] text-retro-muted">
-                                <span className="mr-1">・</span>
-                                <span>★ {repo.stargazers_count} | ⑂ {repo.forks_count}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <p>{repo.description || 'No description provided.'}</p>
+                </article>
             ))}
         </div>
     );

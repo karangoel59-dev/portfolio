@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karan Goel - Software Engineer</title>
+    <title>Karan Goel - Software Engineer, Cloud Infrastructure & Agentic AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -11,15 +11,18 @@
                 extend: {
                     colors: {
                         retro: {
-                            bg: '#efefef',
-                            panel: '#ffffff',
-                            border: '#aaaaaa',
-                            link: '#0000ee',
-                            linkHover: '#ff0000',
-                            text: '#000000',
-                            accent: '#cc0000',
-                            header: '#e5e5e5',
-                            muted: '#666666'
+                            bg: '#f6f3ec',
+                            panel: '#fffefb',
+                            border: '#d9d3c4',
+                            link: '#900000',
+                            linkHover: '#c34205',
+                            text: '#2b2620',
+                            accent: '#900000',
+                            header: '#900000',
+                            headerText: '#f6f3ec',
+                            muted: '#736c5f',
+                            tag: '#f1ece0',
+                            tagBorder: '#d9d3c4'
                         },
                         resume: {
                             primary: '#111827',
@@ -28,8 +31,8 @@
                         }
                     },
                     fontFamily: {
-                        'retro': ['"MS PGothic"', '"Mona"', '"IPAMonaPGothic"', 'Arial', 'sans-serif'],
-                        'mono': ['"MS Gothic"', 'Courier', 'monospace'],
+                        'retro': ['Georgia', '"Iowan Old Style"', '"Palatino Linotype"', '"Times New Roman"', 'serif'],
+                        'mono': ['"Courier New"', 'Courier', 'monospace'],
                         'resume': ['Arial', 'Helvetica', 'sans-serif']
                     }
                 }
@@ -37,13 +40,10 @@
         }
     </script>
         <style>
-        /* Force classic aliasing feel and link behaviors for screen */
+        /* Archive-style link behavior for screen */
         @media screen {
-            body {
-                -webkit-font-smoothing: none;
-                -moz-osx-font-smoothing: grayscale;
-            }
-            a { text-decoration: underline; }
+            a { text-decoration: none; }
+            a:hover { text-decoration: underline; }
         }
         
         /* Print styles for saving as PDF */

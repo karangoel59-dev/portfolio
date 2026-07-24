@@ -66,47 +66,63 @@ const App: React.FC = () => {
         <>
             {/* RETRO LAYOUT - Visible on screen, hidden on print */}
             <div className="max-w-5xl mx-auto print:hidden">
+                {/* Site Banner */}
+                <div className="bg-retro-header text-retro-headerText -mx-2 sm:-mx-4 md:-mx-8 px-2 sm:px-4 md:px-8 py-3 mb-6 flex flex-wrap items-center justify-between gap-3">
+                    <a href="#top" className="font-bold text-[15px] tracking-[0.2em] uppercase border border-retro-headerText/60 px-2 py-1">
+                        KG Archive
+                    </a>
+                    <nav className="flex flex-wrap gap-x-4 gap-y-1 text-[12px] uppercase tracking-wider">
+                        <a href="#summary" className="hover:underline">Summary</a>
+                        <a href="#skills" className="hover:underline">Skills</a>
+                        <a href="#experience" className="hover:underline">Experience</a>
+                        <a href="#projects" className="hover:underline">Projects</a>
+                        <a href="#education" className="hover:underline">Education</a>
+                    </nav>
+                </div>
+
                 {/* Header / Hero Section */}
-                <div className="mb-6">
-                    <div className="flex justify-between items-end mb-2">
-                        <h1 className="text-[20px] sm:text-[24px] font-bold text-retro-accent border-b-2 border-retro-accent pb-1 inline-block">
-                            ■ {resumeState.name} - {resumeState.title}
-                        </h1>
-                        
-                        <button 
-                            onClick={() => setIsEditModalOpen(true)} 
-                            className="text-retro-link hover:text-retro-linkHover cursor-pointer bg-transparent border-none p-0 underline text-[14px] font-retro"
+                <div id="top" className="mb-6 scroll-mt-20">
+                    <div className="flex flex-wrap justify-between items-end gap-3 mb-2">
+                        <div>
+                            <h1 className="text-[24px] sm:text-[30px] font-bold text-retro-accent leading-tight">
+                                {resumeState.name}
+                            </h1>
+                            <p className="text-[14px] sm:text-[16px] italic text-retro-muted">{resumeState.title}</p>
+                        </div>
+
+                        <button
+                            onClick={() => setIsEditModalOpen(true)}
+                            className="cursor-pointer bg-retro-panel border border-retro-accent text-retro-accent hover:bg-retro-accent hover:text-retro-headerText transition-colors px-3 py-1.5 text-[12px] uppercase tracking-wider"
                             title="Edit and Print/Save as PDF"
                         >
-                            [Download / Print Resume]
+                            Download / Print Resume
                         </button>
                     </div>
-                    
-                    <div className="bg-retro-panel border border-retro-border p-3 text-[14px] mt-2">
+                    <div className="border-t border-retro-border mt-3 pt-3">
                         <table className="w-full sm:w-auto border-collapse">
                             <tbody>
                                 <tr>
-                                    <td className="pr-4 py-1 text-retro-muted text-right whitespace-nowrap">Location:</td>
+                                    <td className="pr-4 py-1 text-retro-muted text-[12px] uppercase tracking-wider text-right whitespace-nowrap align-top">Location</td>
                                     <td className="py-1">{resumeState.contact.location}</td>
                                 </tr>
                                 <tr>
-                                    <td className="pr-4 py-1 text-retro-muted text-right whitespace-nowrap">Contact:</td>
+                                    <td className="pr-4 py-1 text-retro-muted text-[12px] uppercase tracking-wider text-right whitespace-nowrap align-top">Contact</td>
                                     <td className="py-1">
-                                        <a href={`mailto:${resumeState.contact.email}`} className="text-retro-link hover:text-retro-linkHover">[{resumeState.contact.email}]</a>
+                                        <a href={`mailto:${resumeState.contact.email}`} className="text-retro-link hover:text-retro-linkHover hover:underline">{resumeState.contact.email}</a>
                                         <span className="mx-2 text-retro-border">|</span>
-                                        <a href={`tel:${resumeState.contact.phone.replace(/\s/g, '')}`} className="text-retro-link hover:text-retro-linkHover">[{resumeState.contact.phone}]</a>
+                                        <a href={`tel:${resumeState.contact.phone.replace(/\s/g, '')}`} className="text-retro-link hover:text-retro-linkHover hover:underline">{resumeState.contact.phone}</a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="pr-4 py-1 text-retro-muted text-right whitespace-nowrap">Links:</td>
+                                    <td className="pr-4 py-1 text-retro-muted text-[12px] uppercase tracking-wider text-right whitespace-nowrap align-top">Links</td>
                                     <td className="py-1">
-                                        <a href={`https://${resumeState.contact.linkedin}`} target="_blank" rel="noopener noreferrer" className="text-retro-link hover:text-retro-linkHover">[LinkedIn]</a>
+                                        <a href={`https://${resumeState.contact.linkedin}`} target="_blank" rel="noopener noreferrer" className="text-retro-link hover:text-retro-linkHover hover:underline">LinkedIn</a>
                                         <span className="mx-2 text-retro-border">|</span>
-                                        <a href={`https://${resumeState.contact.github}`} target="_blank" rel="noopener noreferrer" className="text-retro-link hover:text-retro-linkHover">[GitHub]</a>
+                                        <a href={`https://${resumeState.contact.github}`} target="_blank" rel="noopener noreferrer" className="text-retro-link hover:text-retro-linkHover hover:underline">GitHub</a>
                                         {resumeState.contact.portfolio && (
                                             <>
                                                 <span className="mx-2 text-retro-border">|</span>
-                                                <a href="#" className="text-retro-link hover:text-retro-linkHover">[Portfolio]</a>
+                                                <a href="#top" className="text-retro-link hover:text-retro-linkHover hover:underline">Portfolio</a>
                                             </>
                                         )}
                                     </td>
@@ -118,51 +134,53 @@ const App: React.FC = () => {
 
                 <main>
                     {/* Professional Summary */}
-                    <Section title="Professional Summary">
+                    <Section id="summary" title="Professional Summary">
                         <p className="whitespace-pre-wrap">
                             {resumeState.summary}
                         </p>
                     </Section>
 
                     {/* Technical Skills */}
-                    <Section title="Technical Skills">
-                        <table className="w-full border-collapse">
-                            <tbody>
-                                {resumeState.skills.map((skillGroup, index) => (
-                                    <tr key={index} className="border-b border-dashed border-retro-border last:border-0">
-                                        <td className="py-2 pr-4 font-bold text-retro-muted whitespace-nowrap align-top w-[1%]">
-                                            [{skillGroup.category}]
-                                        </td>
-                                        <td className="py-2 align-top">
-                                            {skillGroup.skills.join(' / ')}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                    <Section id="skills" title="Technical Skills">
+                        <div className="space-y-3">
+                            {resumeState.skills.map((skillGroup, index) => (
+                                <div key={index} className="flex flex-col sm:flex-row sm:items-baseline gap-x-3 gap-y-1.5">
+                                    <div className="font-bold text-retro-muted text-[12px] uppercase tracking-wider sm:w-48 shrink-0">
+                                        {skillGroup.category}
+                                    </div>
+                                    <div className="flex flex-wrap gap-1.5">
+                                        {skillGroup.skills.map((skill, sIndex) => (
+                                            <span key={sIndex} className="bg-retro-tag border border-retro-tagBorder px-2 py-0.5 text-[12px]">
+                                                {skill}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </Section>
 
                     {/* Professional Experience */}
-                    <Section title="Professional Experience">
+                    <Section id="experience" title="Professional Experience">
                         {resumeState.experience.map((exp, index) => (
                             <ExperienceCard key={index} experience={exp} />
                         ))}
                     </Section>
 
                     {/* Projects (Dynamic from GitHub) */}
-                    <Section title="GitHub Projects">
+                    <Section id="projects" title="GitHub Projects">
                         <GithubProjects repos={repos} loading={loading} error={error} />
                     </Section>
 
                     {/* Education & Competencies */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <Section title="Education">
+                        <Section id="education" title="Education">
                             {resumeState.education.map((edu, index) => (
                                 <div key={index} className="mb-4 last:mb-0">
-                                    <div className="font-bold text-retro-link">{edu.degree}</div>
-                                    <div>{edu.institution}</div>
+                                    <div className="font-bold text-retro-accent">{edu.degree}</div>
+                                    <div className="italic text-retro-muted text-[13px]">{edu.institution}</div>
                                     <div className="text-[12px] text-retro-muted">
-                                        [{edu.startDate} - {edu.endDate}] Loc:{edu.location.split(',')[0]}
+                                        {edu.startDate} – {edu.endDate} · {edu.location}
                                     </div>
                                 </div>
                             ))}
@@ -170,20 +188,27 @@ const App: React.FC = () => {
 
                         <Section title="Core Competencies">
                             <div className="mb-4">
-                                <div className="font-bold text-retro-muted mb-1">[Soft Skills]</div>
-                                <div>{resumeState.coreCompetencies.softSkills.join(' / ')}</div>
+                                <div className="font-bold text-retro-muted mb-1.5 text-[12px] uppercase tracking-wider">Soft Skills</div>
+                                <div className="flex flex-wrap gap-1.5">
+                                    {resumeState.coreCompetencies.softSkills.map((skill, i) => (
+                                        <span key={i} className="bg-retro-tag border border-retro-tagBorder px-2 py-0.5 text-[12px]">{skill}</span>
+                                    ))}
+                                </div>
                             </div>
                             <div>
-                                <div className="font-bold text-retro-muted mb-1">[Languages]</div>
-                                <div>{resumeState.coreCompetencies.languages.join(' / ')}</div>
+                                <div className="font-bold text-retro-muted mb-1.5 text-[12px] uppercase tracking-wider">Languages</div>
+                                <div className="flex flex-wrap gap-1.5">
+                                    {resumeState.coreCompetencies.languages.map((lang, i) => (
+                                        <span key={i} className="bg-retro-tag border border-retro-tagBorder px-2 py-0.5 text-[12px]">{lang}</span>
+                                    ))}
+                                </div>
                             </div>
                         </Section>
                     </div>
                 </main>
-                
-                <footer className="mt-8 pt-4 border-t border-retro-border text-center text-retro-muted text-[12px]">
-                    <p>Copyright © {new Date().getFullYear()} {resumeState.name}. All rights reserved.</p>
-                    <p className="mt-1">Generated dynamically. Best viewed in Netscape Navigator 4.0 or IE 5.5.</p>
+
+                <footer className="mt-8 pt-4 border-t border-retro-border text-center text-retro-muted text-[12px] italic">
+                    <p>© {new Date().getFullYear()} {resumeState.name}. All rights reserved.</p>
                 </footer>
             </div>
 

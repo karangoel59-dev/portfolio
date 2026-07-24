@@ -2,36 +2,44 @@ import { ResumeData } from './types';
 
 export const resumeData: ResumeData = {
     name: "KARAN GOEL",
-    title: "Software Engineer",
+    title: "Software Engineer — Cloud Infrastructure & Agentic AI Systems",
     contact: {
-        location: "Pune, Maharashtra, India",
+        location: "Pune, Maharashtra, India (Open to Global Relocation)",
         phone: "+91 7988965091",
         email: "karangoel59@zohomail.in",
         linkedin: "linkedin.com/in/kg59",
         github: "github.com/karangoel59-dev",
-        portfolio: "Portfolio Website"
+        portfolio: "karangoel59-dev.github.io/portfolio"
     },
-    summary: "Results-driven Software Engineer with 3+ years of experience specializing in DevOps, Site Reliability Engineering (SRE), and cloud infrastructure, complemented by 1+ years of specialized experience in Machine Learning and Agentic AI. Proven track record of architecting scalable systems, optimizing cloud infrastructure, and deploying LLM-powered applications. Passionate about bridging the gap between reliable infrastructure engineering and cutting-edge artificial intelligence.",
+    summary: "Software engineer with 3+ years of production experience across cloud infrastructure, DevOps/SRE, and distributed systems, plus 1+ years building agentic AI platform features. Currently designing orchestration and asynchronous processing (Kafka, RabbitMQ) for a multi-step agent platform at Chat360, and leading the rollout of Hadoop/Spark for terabyte-scale billing data. Track record of owning infrastructure end-to-end — AWS provisioning, Terraform, Kubernetes, CI/CD, and observability — with hands-on LLM application experience (LangChain, OpenAI API). Comfortable carrying projects independently and translating reliability practices from traditional infrastructure into AI-system operations.",
     skills: [
         {
-            category: "Languages",
-            skills: ["Python", "Java", "JavaScript"]
-        },
-        {
             category: "Cloud & Infrastructure",
-            skills: ["GCP", "Azure", "AWS", "Linux", "Terraform"]
+            skills: ["AWS (EC2, S3, IAM, VPC, multi-account)", "GCP (GKE)", "Azure", "Terraform/IaC", "Linux/Unix"]
         },
         {
-            category: "DevOps & CI/CD",
-            skills: ["Kubernetes", "Docker", "CI/CD", "GitHub Actions", "Jenkins", "Bitbucket Pipelines"]
+            category: "Containers & CI/CD",
+            skills: ["Docker", "Kubernetes", "GitHub Actions", "Jenkins", "Bitbucket Pipelines"]
         },
         {
-            category: "Observability & Monitoring",
-            skills: ["Prometheus", "Grafana", "Elastic Stack (ELK)", "New Relic"]
+            category: "Messaging & Data Processing",
+            skills: ["Kafka", "RabbitMQ", "Hadoop & Apache Spark (in progress)", "workflow/orchestration systems"]
         },
         {
-            category: "AI & Machine Learning",
-            skills: ["Machine Learning", "LLMs", "LangChain", "OpenAI API", "Streamlit"]
+            category: "Observability",
+            skills: ["Prometheus", "Grafana", "Elastic Stack (ELK)", "New Relic", "Langfuse"]
+        },
+        {
+            category: "AI & LLM Engineering",
+            skills: ["LLMs", "LangChain", "OpenAI API", "Streamlit", "agentic workflow design"]
+        },
+        {
+            category: "Languages",
+            skills: ["Python", "Go (growing — CLI projects)", "Java", "JavaScript/TypeScript", "Shell"]
+        },
+        {
+            category: "Networking & Data",
+            skills: ["DNS", "HTTP", "OSI fundamentals", "relational data modeling (PostgreSQL)"]
         }
     ],
     experience: [
@@ -42,9 +50,11 @@ export const resumeData: ResumeData = {
             startDate: "March 2026",
             endDate: "Present",
             highlights: [
-                "Built an agentic AI platform and shipped key features such as OCR and semantic analysis, enhancing user experience and driving business growth.",
-                "Architected and implemented scalable system designs to streamline the product life cycle and development workflows.",
-                "Collaborated with cross-functional teams to Dockerize key components, streamlining development and deployment processes while improving deployment reliability."
+                "Shipped OCR, knowledge base, and orchestrator features end-to-end on an agentic AI platform, owning design, system architecture, and deployment for each.",
+                "Designed the orchestrator that sequences multi-step agent workflows, applying distributed-systems patterns to reliability and task coordination.",
+                "Used Kafka and RabbitMQ for asynchronous task processing across distributed agent workflows; managed S3 storage for OCR and semantic-analysis pipelines.",
+                "Migrated services to Docker, built CI/CD pipelines with GitHub Actions, and implemented Langfuse for centralized LLM logging and observability.",
+                "Leading the setup of Hadoop and Apache Spark to support terabyte-scale billing data processing and interactive dashboards."
             ]
         },
         {
@@ -54,9 +64,9 @@ export const resumeData: ResumeData = {
             startDate: "August 2025",
             endDate: "February 2026",
             highlights: [
-                "Consulted for clients to design and deploy custom LLM solutions and autonomous multi-agent systems using Python, LangChain, and OpenAI API.",
-                "Streamlined client production environments by provisioning multi-cloud architectures via Terraform and automating scalable CI/CD pipelines.",
-                "Built comprehensive logging and real-time observability workflows using Prometheus and Grafana to optimize application uptime and detect system performance anomalies early."
+                "Designed and deployed custom LLM solutions and autonomous multi-agent systems for clients using Python, LangChain, and the OpenAI API.",
+                "Provisioned multi-cloud production environments via Terraform and automated CI/CD pipelines for client deployments.",
+                "Built logging and real-time observability workflows with Prometheus and Grafana to monitor uptime and catch performance anomalies early."
             ]
         },
         {
@@ -67,9 +77,8 @@ export const resumeData: ResumeData = {
             endDate: "July 2025",
             highlights: [
                 "Developed and managed 20+ AI agents to monitor and analyze behavioral patterns, improving anomaly detection accuracy by 15%.",
-                "Maintained robust CI/CD pipelines using GitHub Actions for seamless deployment of models and the simulation environment, reducing deployment time by 20%.",
-                "Upgraded the simulation environment by integrating advanced features, significantly improving user experience and system responsiveness.",
-                "Coordinated with academic stakeholders to align technical deliverables with research objectives."
+                "Maintained CI/CD pipelines with GitHub Actions for model and simulation deployments, cutting deployment time by 20%.",
+                "Upgraded the simulation environment, improving responsiveness and user experience; coordinated with academic stakeholders to align deliverables with research objectives."
             ]
         },
         {
@@ -79,11 +88,11 @@ export const resumeData: ResumeData = {
             startDate: "May 2021",
             endDate: "June 2023",
             highlights: [
-                "Designed, implemented, and managed Kubernetes clusters, automated CI/CD workflows with Bitbucket Pipelines and Jenkins, and provisioned scalable infrastructure using Infrastructure as Code (Terraform), reducing deployment failures by 25%.",
-                "Led an initiative to deploy isolated development environments by provisioning multiple VPCs across teams, ensuring security, scalability, and streamlined collaboration, resulting in a 30% faster development cycle.",
-                "Developed analytics dashboards for usage tracking and cost optimization, increasing cloud efficiency by 20% and reducing cloud spending by 15%.",
-                "Maintained logging platforms like ELK, Grafana, and New Relic for observability, improving system uptime by 10%.",
-                "Led a security and infrastructure optimization initiative that reduced incidents by 20% company-wide and improved service reliability."
+                "Provisioned and managed AWS infrastructure (EC2, VPC, IAM) with Terraform, reducing deployment failures by 25%.",
+                "Designed and managed Kubernetes clusters; automated CI/CD workflows with Bitbucket Pipelines and Jenkins.",
+                "Led deployment of isolated development environments across multiple VPCs, applying networking fundamentals for secure connectivity — 30% faster development cycle.",
+                "Built analytics dashboards for usage tracking and cost optimization, improving cloud efficiency by 20% and cutting cloud spend by 15%.",
+                "Maintained ELK, Grafana, and New Relic for observability, improving system uptime by 10%; led a security and infrastructure initiative that reduced incidents by 20% company-wide."
             ]
         },
         {
@@ -93,10 +102,10 @@ export const resumeData: ResumeData = {
             startDate: "March 2020",
             endDate: "June 2021",
             highlights: [
-                "Analyzed and documented system architectures to support infrastructure and development teams, improving cross-team communication by 20%.",
-                "Tested and deployed microservice systems, with responsibilities across patching, deployment, and monitoring, reducing system downtime by 15%.",
-                "Managed multi-cloud infrastructure (AWS, GCP, Azure) with a focus on cost efficiency and uptime, achieving a 10% reduction in cloud costs.",
-                "Improved CI/CD pipelines, reducing deployment time and operational overhead by establishing streamlined code testing processes."
+                "Provisioned EC2/AWS infrastructure for microservice deployments and set up QA/staging environments for multiple teams.",
+                "Migrated workloads from bare-metal servers to cloud (GKE), improving scalability and reducing infrastructure overhead.",
+                "Used Shell scripting for deployment automation and applied networking fundamentals (DNS, HTTP) to troubleshoot microservice connectivity.",
+                "Managed multi-cloud infrastructure (AWS, GCP, Azure) with a focus on cost efficiency and uptime, achieving a 10% reduction in cloud costs."
             ]
         }
     ],

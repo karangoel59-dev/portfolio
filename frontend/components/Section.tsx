@@ -4,15 +4,16 @@ interface SectionProps {
     title: string;
     children: React.ReactNode;
     className?: string;
+    id?: string;
 }
 
-export const Section: React.FC<SectionProps> = ({ title, children, className = '' }) => {
+export const Section: React.FC<SectionProps> = ({ title, children, className = '', id }) => {
     return (
-        <section className={`mb-6 ${className}`}>
-            <div className="bg-retro-header border border-retro-border border-b-0 px-2 py-1 font-bold text-retro-accent text-[14px]">
-                ▼ {title}
-            </div>
-            <div className="bg-retro-panel border border-retro-border p-3 sm:p-4 text-[14px]">
+        <section id={id} className={`mb-8 scroll-mt-20 ${className}`}>
+            <h2 className="bg-retro-header text-retro-headerText px-3 py-2 font-bold text-[13px] uppercase tracking-[0.15em]">
+                {title}
+            </h2>
+            <div className="bg-retro-panel border border-t-0 border-retro-border p-4 sm:p-5 text-[15px] leading-relaxed">
                 {children}
             </div>
         </section>

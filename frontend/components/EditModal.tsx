@@ -59,9 +59,9 @@ export const EditModal: React.FC<EditModalProps> = ({
         <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4 print:hidden">
             <div className="bg-retro-bg border-2 border-retro-border w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl">
                 {/* Modal Header */}
-                <div className="bg-retro-header border-b border-retro-border px-4 py-2 font-bold flex justify-between items-center text-[14px]">
-                    <span>[Edit Resume for Application]</span>
-                    <button onClick={onClose} className="text-retro-text hover:text-retro-linkHover font-bold px-2">✕</button>
+                <div className="bg-retro-header text-retro-headerText border-b border-retro-border px-4 py-2 font-bold flex justify-between items-center text-[14px] uppercase tracking-wider">
+                    <span>Edit Resume for Application</span>
+                    <button onClick={onClose} className="text-retro-headerText hover:text-retro-linkHover font-bold px-2 normal-case tracking-normal">✕</button>
                 </div>
 
                 {/* Modal Body */}
