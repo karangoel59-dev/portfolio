@@ -11,7 +11,7 @@ export const resumeData: ResumeData = {
         github: "github.com/karangoel59-dev",
         portfolio: "karangoel59-dev.github.io/portfolio"
     },
-    summary: "Software engineer with 3+ years of production experience across cloud infrastructure, DevOps/SRE, and distributed systems, plus 1+ years building agentic AI platform features. Currently designing orchestration and asynchronous processing (Kafka, RabbitMQ) for a multi-step agent platform at Chat360, and leading the rollout of Hadoop/Spark for terabyte-scale billing data. Track record of owning infrastructure end-to-end — AWS provisioning, Terraform, Kubernetes, CI/CD, and observability — with hands-on LLM application experience (LangChain, OpenAI API). Comfortable carrying projects independently and translating reliability practices from traditional infrastructure into AI-system operations.",
+    summary: "Software engineer with 3+ years of production experience across cloud infrastructure, DevOps/SRE, and distributed systems, plus 1+ years building agentic AI platform features. Currently designing orchestration and asynchronous processing (Kafka, RabbitMQ) for a multi-step agent platform at Chat360. Track record of owning infrastructure end-to-end — AWS provisioning, Terraform, Kubernetes, CI/CD, and observability — with hands-on LLM application experience (LangChain, OpenAI API). Comfortable carrying projects independently and translating reliability practices from traditional infrastructure into AI-system operations.",
     skills: [
         {
             category: "Cloud & Infrastructure",
@@ -23,7 +23,7 @@ export const resumeData: ResumeData = {
         },
         {
             category: "Messaging & Data Processing",
-            skills: ["Kafka", "RabbitMQ", "Hadoop & Apache Spark (in progress)", "workflow/orchestration systems"]
+            skills: ["Kafka", "RabbitMQ", "workflow/orchestration systems"]
         },
         {
             category: "Observability",
@@ -50,23 +50,24 @@ export const resumeData: ResumeData = {
             startDate: "March 2026",
             endDate: "Present",
             highlights: [
-                "Shipped OCR, knowledge base, and orchestrator features end-to-end on an agentic AI platform, owning design, system architecture, and deployment for each.",
-                "Designed the orchestrator that sequences multi-step agent workflows, applying distributed-systems patterns to reliability and task coordination.",
+                "Built OCR and knowledge base features that eliminated the need for manual KB training on unstructured, messy data, processing 1,000+ documents/month.",
+                "Designed the orchestrator sequencing multi-step agent workflows, achieving 6-second end-to-end execution with a 90% workflow completion rate.",
                 "Used Kafka and RabbitMQ for asynchronous task processing across distributed agent workflows; managed S3 storage for OCR and semantic-analysis pipelines.",
-                "Migrated services to Docker, built CI/CD pipelines with GitHub Actions, and implemented Langfuse for centralized LLM logging and observability.",
-                "Leading the setup of Hadoop and Apache Spark to support terabyte-scale billing data processing and interactive dashboards."
+                "Migrated services to Docker and implemented Langfuse for centralized observability, cutting deployment time and issue-detection time both from hours to minutes, with 80-90% trace coverage across the orchestrator pipeline.",
+                "Built backend APIs for semantic OCR search, using PostgreSQL for relational data modeling and storage."
             ]
         },
         {
-            title: "Freelance AI & DevOps Engineer",
-            company: "Independent Contractor",
+            title: "AI & DevOps Engineer — Independent Projects",
+            company: "Open-Source Contributions & Independent Client Work",
             location: "Remote",
             startDate: "August 2025",
             endDate: "February 2026",
             highlights: [
-                "Designed and deployed custom LLM solutions and autonomous multi-agent systems for clients using Python, LangChain, and the OpenAI API.",
-                "Provisioned multi-cloud production environments via Terraform and automated CI/CD pipelines for client deployments.",
-                "Built logging and real-time observability workflows with Prometheus and Grafana to monitor uptime and catch performance anomalies early."
+                "Designed and deployed a custom LLM solution and autonomous multi-agent system for a client project, using Python, LangChain, and the OpenAI API.",
+                "Provisioned a multi-cloud production environment via Terraform and automated CI/CD pipelines for the deployment.",
+                "Built logging and real-time observability workflows with Prometheus and Grafana to monitor uptime and catch performance anomalies early.",
+                "Contributed to open-source AI/LLM projects, building features and fixes for community-maintained repositories using Python and LangChain."
             ]
         },
         {
