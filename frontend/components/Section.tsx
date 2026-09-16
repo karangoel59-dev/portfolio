@@ -10,10 +10,10 @@ interface SectionProps {
 export const Section: React.FC<SectionProps> = ({ title, children, className = '', id }) => {
     return (
         <section id={id} className={`mb-8 scroll-mt-20 ${className}`}>
-            <h2 className="bg-retro-header text-retro-headerText px-3 py-2 font-bold text-[13px] uppercase tracking-[0.15em]">
-                {title}
+            <h2 className="bg-arcade-header text-arcade-accent neon-text border-2 border-b-0 border-arcade-border px-3 py-2 font-pixel text-[12px] uppercase tracking-[0.15em]">
+                ▌{title}
             </h2>
-            <div className="bg-retro-panel border border-t-0 border-retro-border p-4 sm:p-5 text-[15px] leading-relaxed">
+            <div className="bg-arcade-panel border-2 border-t-0 border-arcade-border p-4 sm:p-5 text-[18px] leading-relaxed">
                 {children}
             </div>
         </section>

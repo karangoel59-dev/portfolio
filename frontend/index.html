@@ -4,25 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Karan Goel - Software Engineer, Cloud Infrastructure & Agentic AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        retro: {
-                            bg: '#f6f3ec',
-                            panel: '#fffefb',
-                            border: '#d9d3c4',
-                            link: '#900000',
-                            linkHover: '#c34205',
-                            text: '#2b2620',
-                            accent: '#900000',
-                            header: '#900000',
-                            headerText: '#f6f3ec',
-                            muted: '#736c5f',
-                            tag: '#f1ece0',
-                            tagBorder: '#d9d3c4'
+                        arcade: {
+                            bg: '#0a0014',
+                            panel: '#150726',
+                            border: '#ff2bd6',
+                            border2: '#00fff9',
+                            link: '#00fff9',
+                            linkHover: '#ff2bd6',
+                            text: '#d8f8ff',
+                            accent: '#39ff14',
+                            header: '#000000',
+                            headerText: '#39ff14',
+                            muted: '#9d8ec7',
+                            tag: '#1a0033',
+                            tagBorder: '#00fff9',
+                            yellow: '#ffe600'
                         },
                         resume: {
                             primary: '#111827',
@@ -31,7 +36,8 @@
                         }
                     },
                     fontFamily: {
-                        'retro': ['Georgia', '"Iowan Old Style"', '"Palatino Linotype"', '"Times New Roman"', 'serif'],
+                        'arcade': ['"VT323"', '"Courier New"', 'monospace'],
+                        'pixel': ['"Press Start 2P"', 'monospace'],
                         'mono': ['"Courier New"', 'Courier', 'monospace'],
                         'resume': ['Arial', 'Helvetica', 'sans-serif']
                     }
@@ -39,14 +45,57 @@
             }
         }
     </script>
-        <style>
-        /* Archive-style link behavior for screen */
+    <style>
+        /* CRT scanline + vignette overlay for the arcade cabinet feel */
         @media screen {
             a { text-decoration: none; }
             a:hover { text-decoration: underline; }
+
+            body {
+                position: relative;
+            }
+
+            body::before {
+                content: '';
+                position: fixed;
+                inset: 0;
+                pointer-events: none;
+                z-index: 40;
+                background: repeating-linear-gradient(
+                    to bottom,
+                    rgba(255, 255, 255, 0.035) 0px,
+                    rgba(255, 255, 255, 0.035) 1px,
+                    transparent 1px,
+                    transparent 3px
+                );
+            }
+
+            body::after {
+                content: '';
+                position: fixed;
+                inset: 0;
+                pointer-events: none;
+                z-index: 41;
+                box-shadow: inset 0 0 12vw rgba(0, 0, 0, 0.75);
+            }
+
+            .neon-text {
+                text-shadow: 0 0 4px currentColor, 0 0 12px currentColor, 0 0 24px currentColor;
+            }
+
+            .neon-box {
+                box-shadow: 0 0 6px currentColor, 0 0 16px currentColor;
+            }
+
+            .arcade-pattern {
+                background-image:
+                    linear-gradient(rgba(0, 255, 249, 0.08) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0, 255, 249, 0.08) 1px, transparent 1px);
+                background-size: 28px 28px;
+            }
         }
-        
-        /* Print styles for saving as PDF */
+
+        /* Print styles for saving as PDF - always the clean professional layout */
         @media print {
             @page {
                 margin: 0.5in;
@@ -65,7 +114,7 @@
         }
     </style>
 </head>
-<body class="bg-retro-bg text-retro-text font-retro text-[14px] leading-relaxed p-2 sm:p-4 md:p-4 md:p-8 print:p-0 print:bg-white">
+<body class="bg-arcade-bg text-arcade-text font-arcade text-[18px] leading-relaxed p-2 sm:p-4 md:p-4 md:p-8 print:p-0 print:bg-white print:text-[14px] print:font-resume arcade-pattern">
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
 </body>
