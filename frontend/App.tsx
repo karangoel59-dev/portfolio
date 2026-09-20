@@ -7,6 +7,35 @@ import { ClassicResume } from './components/ClassicResume';
 import { EditModal } from './components/EditModal';
 import { GithubRepo, ResumeData } from './types';
 
+const NAV_LINKS = [
+    { href: '#summary', label: 'Summary' },
+    { href: '#skills', label: 'Skills' },
+    { href: '#experience', label: 'Experience' },
+    { href: '#projects', label: 'Projects' },
+    { href: '#education', label: 'Education' },
+];
+
+const chipClass =
+    'rounded-md border border-ui-line bg-ui-elevated px-2.5 py-1 text-[12px] text-ui-muted transition-colors hover:border-ui-lineStrong hover:text-ui-ink';
+
+/**
+ * The edit modal keeps raw textarea/comma input so blank lines stay typeable while editing.
+ * Strip them here, on save, so empty bullets and empty skill chips never reach the PDF as
+ * blank lines that still consume list spacing.
+ */
+const normalizeResumeData = (data: ResumeData): ResumeData => ({
+    ...data,
+    summary: data.summary.trim(),
+    skills: data.skills.map(group => ({
+        ...group,
+        skills: group.skills.map(skill => skill.trim()).filter(Boolean),
+    })),
+    experience: data.experience.map(exp => ({
+        ...exp,
+        highlights: exp.highlights.map(highlight => highlight.trim()).filter(Boolean),
+    })),
+});
+
 const App: React.FC = () => {
     const [resumeState, setResumeState] = useState<ResumeData>(initialResumeData);
     const [repos, setRepos] = useState<GithubRepo[]>([]);
@@ -53,7 +82,7 @@ const App: React.FC = () => {
     }, [shouldPrint]);
 
     const handleSaveAndPrint = (newData: ResumeData, newSelectedRepoIds: number[]) => {
-        setResumeState(newData);
+        setResumeState(normalizeResumeData(newData));
         setSelectedRepoIds(newSelectedRepoIds);
         setIsEditModalOpen(false);
         // Small delay to allow React to re-render the DOM with new data before invoking print dialog
@@ -62,95 +91,112 @@ const App: React.FC = () => {
         }, 150);
     };
 
+    const initials = resumeState.name
+        .split(' ')
+        .map((part: string) => part[0])
+        .join('')
+        .slice(0, 2)
+        .toUpperCase();
+
     return (
         <>
-            {/* ARCADE LAYOUT - Visible on screen, hidden on print */}
-            <div className="max-w-5xl mx-auto print:hidden">
-                {/* Site Banner */}
-                <div className="bg-arcade-header text-arcade-headerText border-b-4 border-arcade-border -mx-2 sm:-mx-4 md:-mx-8 px-2 sm:px-4 md:px-8 py-3 mb-8 flex flex-wrap items-center justify-between gap-3">
-                    <a href="#top" className="font-pixel neon-text text-[11px] sm:text-[13px] tracking-[0.15em] uppercase border-2 border-arcade-headerText px-3 py-2">
-                        KG_ARCADE
-                    </a>
-                    <nav className="flex flex-wrap gap-x-4 gap-y-1 text-[16px] text-arcade-border2 uppercase tracking-wider">
-                        <a href="#summary" className="hover:text-arcade-accent hover:underline">Summary</a>
-                        <a href="#skills" className="hover:text-arcade-accent hover:underline">Skills</a>
-                        <a href="#experience" className="hover:text-arcade-accent hover:underline">Experience</a>
-                        <a href="#projects" className="hover:text-arcade-accent hover:underline">Projects</a>
-                        <a href="#education" className="hover:text-arcade-accent hover:underline">Education</a>
-                    </nav>
-                </div>
+            {/* PORTFOLIO LAYOUT - Visible on screen, hidden on print */}
+            <div className="mx-auto max-w-4xl print:hidden">
+                {/* Site Navigation */}
+                <header className="sticky top-0 z-30 -mx-4 mb-10 border-b border-ui-line bg-ui-bg/80 px-4 py-3 backdrop-blur-md sm:-mx-6 sm:px-6 md:-mx-8 md:px-8">
+                    <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-3">
+                        <a href="#top" className="flex items-center gap-2.5 font-semibold tracking-tight text-ui-ink">
+                            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-ui-accent text-[13px] font-bold text-white">
+                                {initials}
+                            </span>
+                            <span className="text-sm">{resumeState.name}</span>
+                        </a>
+                        <nav className="flex flex-wrap gap-x-5 gap-y-1 text-[13px] text-ui-muted">
+                            {NAV_LINKS.map(link => (
+                                <a key={link.href} href={link.href} className="transition-colors hover:text-ui-accentSoft">
+                                    {link.label}
+                                </a>
+                            ))}
+                        </nav>
+                    </div>
+                </header>
 
-                {/* Header / Hero Section */}
-                <div id="top" className="mb-8 scroll-mt-20">
-                    <div className="flex flex-wrap justify-between items-end gap-4 mb-3">
+                {/* Hero */}
+                <div id="top" className="mb-12 scroll-mt-24 animate-fade-up">
+                    <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
                         <div>
-                            <h1 className="font-pixel neon-text text-[22px] sm:text-[32px] text-arcade-accent leading-relaxed">
+                            <h1 className="text-3xl font-bold tracking-tight text-ui-ink sm:text-4xl">
                                 {resumeState.name}
                             </h1>
-                            <p className="text-[18px] sm:text-[20px] text-arcade-border2 before:content-['>_'] before:text-arcade-yellow before:mr-1">{resumeState.title}</p>
+                            <p className="mt-1.5 text-base text-ui-accentSoft sm:text-lg">{resumeState.title}</p>
                         </div>
 
                         <button
                             onClick={() => setIsEditModalOpen(true)}
-                            className="cursor-pointer bg-arcade-panel border-2 border-arcade-border2 text-arcade-border2 hover:bg-arcade-border2 hover:text-arcade-bg transition-all px-4 py-2 text-[13px] font-pixel uppercase tracking-wider shadow-[4px_4px_0_0_#ff2bd6] hover:shadow-[2px_2px_0_0_#ff2bd6] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px]"
+                            className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-ui-accent px-4 py-2.5 text-sm font-medium text-white shadow-card transition-colors hover:bg-ui-accentSoft"
                             title="Edit and Print/Save as PDF"
                         >
-                            ▶ Print Resume
+                            <span aria-hidden="true">↓</span> Print Resume
                         </button>
                     </div>
-                    <div className="border-t-2 border-dashed border-arcade-border mt-3 pt-3">
-                        <table className="w-full sm:w-auto border-collapse text-[18px]">
-                            <tbody>
-                                <tr>
-                                    <td className="pr-4 py-1 text-arcade-yellow text-[13px] uppercase tracking-wider text-right whitespace-nowrap align-top">Location</td>
-                                    <td className="py-1">{resumeState.contact.location}</td>
-                                </tr>
-                                <tr>
-                                    <td className="pr-4 py-1 text-arcade-yellow text-[13px] uppercase tracking-wider text-right whitespace-nowrap align-top">Contact</td>
-                                    <td className="py-1">
-                                        <a href={`mailto:${resumeState.contact.email}`} className="text-arcade-link hover:text-arcade-linkHover hover:underline">{resumeState.contact.email}</a>
-                                        <span className="mx-2 text-arcade-border">|</span>
-                                        <a href={`tel:${resumeState.contact.phone.replace(/\s/g, '')}`} className="text-arcade-link hover:text-arcade-linkHover hover:underline">{resumeState.contact.phone}</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="pr-4 py-1 text-arcade-yellow text-[13px] uppercase tracking-wider text-right whitespace-nowrap align-top">Links</td>
-                                    <td className="py-1">
-                                        <a href={`https://${resumeState.contact.linkedin}`} target="_blank" rel="noopener noreferrer" className="text-arcade-link hover:text-arcade-linkHover hover:underline">LinkedIn</a>
-                                        <span className="mx-2 text-arcade-border">|</span>
-                                        <a href={`https://${resumeState.contact.github}`} target="_blank" rel="noopener noreferrer" className="text-arcade-link hover:text-arcade-linkHover hover:underline">GitHub</a>
-                                        {resumeState.contact.portfolio && (
-                                            <>
-                                                <span className="mx-2 text-arcade-border">|</span>
-                                                <a href="#top" className="text-arcade-link hover:text-arcade-linkHover hover:underline">Portfolio</a>
-                                            </>
-                                        )}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+
+                    <dl className="flex flex-col gap-3 border-t border-ui-line pt-5 text-[15px] sm:flex-row sm:flex-wrap sm:gap-x-8">
+                        <div className="flex items-baseline gap-2">
+                            <dt className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ui-faint">Location</dt>
+                            <dd className="text-ui-muted">{resumeState.contact.location}</dd>
+                        </div>
+                        <div className="flex flex-wrap items-baseline gap-2">
+                            <dt className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ui-faint">Contact</dt>
+                            <dd className="flex flex-wrap items-center gap-x-2 text-ui-muted">
+                                <a href={`mailto:${resumeState.contact.email}`} className="text-ui-accentSoft hover:text-ui-teal">
+                                    {resumeState.contact.email}
+                                </a>
+                                <span className="text-ui-lineStrong">/</span>
+                                <a href={`tel:${resumeState.contact.phone.replace(/\s/g, '')}`} className="text-ui-accentSoft hover:text-ui-teal">
+                                    {resumeState.contact.phone}
+                                </a>
+                            </dd>
+                        </div>
+                        <div className="flex flex-wrap items-baseline gap-2">
+                            <dt className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ui-faint">Links</dt>
+                            <dd className="flex flex-wrap items-center gap-x-2 text-ui-muted">
+                                <a href={`https://${resumeState.contact.linkedin}`} target="_blank" rel="noopener noreferrer" className="text-ui-accentSoft hover:text-ui-teal">
+                                    LinkedIn
+                                </a>
+                                <span className="text-ui-lineStrong">/</span>
+                                <a href={`https://${resumeState.contact.github}`} target="_blank" rel="noopener noreferrer" className="text-ui-accentSoft hover:text-ui-teal">
+                                    GitHub
+                                </a>
+                                {resumeState.contact.portfolio && (
+                                    <>
+                                        <span className="text-ui-lineStrong">/</span>
+                                        <a href="#top" className="text-ui-accentSoft hover:text-ui-teal">Portfolio</a>
+                                    </>
+                                )}
+                            </dd>
+                        </div>
+                    </dl>
                 </div>
 
                 <main>
                     {/* Professional Summary */}
                     <Section id="summary" title="Professional Summary">
-                        <p className="whitespace-pre-wrap">
+                        <p className="whitespace-pre-wrap text-ui-muted">
                             {resumeState.summary}
                         </p>
                     </Section>
 
                     {/* Technical Skills */}
                     <Section id="skills" title="Technical Skills">
-                        <div className="space-y-3">
+                        <div className="space-y-5">
                             {resumeState.skills.map((skillGroup, index) => (
-                                <div key={index} className="flex flex-col sm:flex-row sm:items-baseline gap-x-3 gap-y-1.5">
-                                    <div className="font-bold text-arcade-yellow text-[13px] uppercase tracking-wider sm:w-48 shrink-0">
+                                <div key={index} className="flex flex-col gap-x-4 gap-y-2 sm:flex-row sm:items-start">
+                                    <div className="shrink-0 pt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-ui-faint sm:w-44">
                                         {skillGroup.category}
                                     </div>
                                     <div className="flex flex-wrap gap-1.5">
                                         {skillGroup.skills.map((skill, sIndex) => (
-                                            <span key={sIndex} className="bg-arcade-tag border border-arcade-tagBorder text-arcade-border2 px-2 py-0.5 text-[13px]">
+                                            <span key={sIndex} className={chipClass}>
                                                 {skill}
                                             </span>
                                         ))}
@@ -173,13 +219,13 @@ const App: React.FC = () => {
                     </Section>
 
                     {/* Education & Competencies */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 gap-x-6 md:grid-cols-2">
                         <Section id="education" title="Education">
                             {resumeState.education.map((edu, index) => (
-                                <div key={index} className="mb-4 last:mb-0">
-                                    <div className="font-bold text-arcade-accent">{edu.degree}</div>
-                                    <div className="text-arcade-border2 text-[14px]">{edu.institution}</div>
-                                    <div className="text-[13px] text-arcade-muted">
+                                <div key={index} className="mb-5 last:mb-0">
+                                    <div className="font-semibold tracking-tight text-ui-ink">{edu.degree}</div>
+                                    <div className="mt-0.5 text-sm text-ui-accentSoft">{edu.institution}</div>
+                                    <div className="mt-0.5 text-[13px] tabular-nums text-ui-faint">
                                         {edu.startDate} – {edu.endDate} · {edu.location}
                                     </div>
                                 </div>
@@ -187,19 +233,19 @@ const App: React.FC = () => {
                         </Section>
 
                         <Section title="Core Competencies">
-                            <div className="mb-4">
-                                <div className="font-bold text-arcade-yellow mb-1.5 text-[13px] uppercase tracking-wider">Soft Skills</div>
+                            <div className="mb-5">
+                                <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-ui-faint">Soft Skills</div>
                                 <div className="flex flex-wrap gap-1.5">
                                     {resumeState.coreCompetencies.softSkills.map((skill, i) => (
-                                        <span key={i} className="bg-arcade-tag border border-arcade-tagBorder text-arcade-border2 px-2 py-0.5 text-[13px]">{skill}</span>
+                                        <span key={i} className={chipClass}>{skill}</span>
                                     ))}
                                 </div>
                             </div>
                             <div>
-                                <div className="font-bold text-arcade-yellow mb-1.5 text-[13px] uppercase tracking-wider">Languages</div>
+                                <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-ui-faint">Languages</div>
                                 <div className="flex flex-wrap gap-1.5">
                                     {resumeState.coreCompetencies.languages.map((lang, i) => (
-                                        <span key={i} className="bg-arcade-tag border border-arcade-tagBorder text-arcade-border2 px-2 py-0.5 text-[13px]">{lang}</span>
+                                        <span key={i} className={chipClass}>{lang}</span>
                                     ))}
                                 </div>
                             </div>
@@ -207,8 +253,8 @@ const App: React.FC = () => {
                     </div>
                 </main>
 
-                <footer className="mt-10 pt-4 border-t-2 border-dashed border-arcade-border text-center text-arcade-muted text-[14px]">
-                    <p>© {new Date().getFullYear()} {resumeState.name} · INSERT COIN TO CONTINUE</p>
+                <footer className="mt-4 border-t border-ui-line pt-6 text-center text-[13px] text-ui-faint">
+                    <p>© {new Date().getFullYear()} {resumeState.name} · Built with React and Tailwind CSS</p>
                 </footer>
             </div>
 

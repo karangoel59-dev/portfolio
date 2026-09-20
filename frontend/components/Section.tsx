@@ -9,11 +9,12 @@ interface SectionProps {
 
 export const Section: React.FC<SectionProps> = ({ title, children, className = '', id }) => {
     return (
-        <section id={id} className={`mb-8 scroll-mt-20 ${className}`}>
-            <h2 className="bg-arcade-header text-arcade-accent neon-text border-2 border-b-0 border-arcade-border px-3 py-2 font-pixel text-[12px] uppercase tracking-[0.15em]">
-                ▌{title}
+        <section id={id} className={`mb-10 scroll-mt-24 ${className}`}>
+            <h2 className="mb-3 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-ui-faint">
+                <span className="h-px w-6 shrink-0 bg-ui-lineStrong" aria-hidden="true" />
+                {title}
             </h2>
-            <div className="bg-arcade-panel border-2 border-t-0 border-arcade-border p-4 sm:p-5 text-[18px] leading-relaxed">
+            <div className="rounded-xl border border-ui-line bg-ui-surface p-5 shadow-card sm:p-6">
                 {children}
             </div>
         </section>

@@ -8,7 +8,7 @@ interface ClassicResumeProps {
 
 export const ClassicResume: React.FC<ClassicResumeProps> = ({ data, repos }) => {
     return (
-        <div className="font-resume text-resume-primary bg-white w-full max-w-[8.5in] mx-auto text-[11pt] leading-snug">
+        <div className="font-resume text-resume-primary bg-white w-full max-w-[8.5in] mx-auto text-[11pt] leading-[15pt]">
             {/* Header */}
             <header className="text-center mb-6">
                 <h1 className="text-3xl font-bold tracking-wide mb-1">{data.name}</h1>
@@ -35,20 +35,20 @@ export const ClassicResume: React.FC<ClassicResumeProps> = ({ data, repos }) => 
 
             {/* Professional Summary */}
             <section className="mb-5 print-break-inside-avoid">
-                <h3 className="text-[12pt] font-bold text-resume-primary uppercase tracking-wider border-l-[3px] border-resume-accent pl-2 mb-2">
+                <h3 className="text-[12pt] font-bold text-resume-primary uppercase tracking-wider border-l-[3px] border-resume-accent pl-2 mb-2.5 break-after-avoid">
                     Professional Summary
                 </h3>
-                <p className="text-justify">
+                <p>
                     {data.summary}
                 </p>
             </section>
 
             {/* Technical Skills */}
             <section className="mb-5 print-break-inside-avoid">
-                <h3 className="text-[12pt] font-bold text-resume-primary uppercase tracking-wider border-l-[3px] border-resume-accent pl-2 mb-2">
+                <h3 className="text-[12pt] font-bold text-resume-primary uppercase tracking-wider border-l-[3px] border-resume-accent pl-2 mb-2.5 break-after-avoid">
                     Technical Skills
                 </h3>
-                <div className="grid grid-cols-[180px_1fr] gap-y-1.5">
+                <div className="grid grid-cols-[170px_1fr] gap-x-4 gap-y-1.5">
                     {data.skills.map((skillGroup, index) => (
                         <React.Fragment key={index}>
                             <div className="font-bold">{skillGroup.category}:</div>
@@ -60,10 +60,10 @@ export const ClassicResume: React.FC<ClassicResumeProps> = ({ data, repos }) => 
 
             {/* Professional Experience */}
             <section className="mb-5">
-                <h3 className="text-[12pt] font-bold text-resume-primary uppercase tracking-wider border-l-[3px] border-resume-accent pl-2 mb-3">
+                <h3 className="text-[12pt] font-bold text-resume-primary uppercase tracking-wider border-l-[3px] border-resume-accent pl-2 mb-2.5 break-after-avoid">
                     Professional Experience
                 </h3>
-                <div className="space-y-4">
+                <div className="space-y-3.5">
                     {data.experience.map((exp, index) => (
                         <div key={index} className="print-break-inside-avoid">
                             <div className="flex justify-between items-baseline">
@@ -86,10 +86,10 @@ export const ClassicResume: React.FC<ClassicResumeProps> = ({ data, repos }) => 
 
             {/* Projects (Using GitHub Repos) */}
             <section className="mb-5">
-                <h3 className="text-[12pt] font-bold text-resume-primary uppercase tracking-wider border-l-[3px] border-resume-accent pl-2 mb-3">
+                <h3 className="text-[12pt] font-bold text-resume-primary uppercase tracking-wider border-l-[3px] border-resume-accent pl-2 mb-2.5 break-after-avoid">
                     Projects
                 </h3>
-                <div className="space-y-4">
+                <div className="space-y-3.5">
                     {repos.map((repo, index) => (
                         <div key={index} className="print-break-inside-avoid">
                             <div className="flex justify-between items-baseline">
@@ -113,10 +113,10 @@ export const ClassicResume: React.FC<ClassicResumeProps> = ({ data, repos }) => 
 
             {/* Education */}
             <section className="mb-5 print-break-inside-avoid">
-                <h3 className="text-[12pt] font-bold text-resume-primary uppercase tracking-wider border-l-[3px] border-resume-accent pl-2 mb-3">
+                <h3 className="text-[12pt] font-bold text-resume-primary uppercase tracking-wider border-l-[3px] border-resume-accent pl-2 mb-2.5 break-after-avoid">
                     Education
                 </h3>
-                <div className="space-y-3">
+                <div className="space-y-3.5">
                     {data.education.map((edu, index) => (
                         <div key={index}>
                             <div className="flex justify-between items-baseline">
@@ -134,7 +134,7 @@ export const ClassicResume: React.FC<ClassicResumeProps> = ({ data, repos }) => 
 
             {/* Core Competencies */}
             <section className="print-break-inside-avoid">
-                <h3 className="text-[12pt] font-bold text-resume-primary uppercase tracking-wider border-l-[3px] border-resume-accent pl-2 mb-2">
+                <h3 className="text-[12pt] font-bold text-resume-primary uppercase tracking-wider border-l-[3px] border-resume-accent pl-2 mb-2.5 break-after-avoid">
                     Core Competencies
                 </h3>
                 <div className="space-y-1">
