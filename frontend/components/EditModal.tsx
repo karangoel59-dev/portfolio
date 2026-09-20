@@ -29,6 +29,16 @@ export const EditModal: React.FC<EditModalProps> = ({
         }
     }, [data, initialSelectedRepoIds, isOpen]);
 
+    // Close on Escape
+    useEffect(() => {
+        if (!isOpen) return;
+        const onKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') onClose();
+        };
+        window.addEventListener('keydown', onKeyDown);
+        return () => window.removeEventListener('keydown', onKeyDown);
+    }, [isOpen, onClose]);
+
     if (!isOpen) return null;
 
     const handleExperienceChange = (index: number, field: string, value: string) => {
@@ -55,29 +65,50 @@ export const EditModal: React.FC<EditModalProps> = ({
         );
     };
 
-    const inputClass = "w-full bg-arcade-bg border-2 border-arcade-border2 text-arcade-text p-1.5 font-mono text-[13px] focus:outline-none focus:border-arcade-accent";
+    const inputClass =
+        'w-full rounded-lg border border-ui-line bg-ui-bg px-3 py-2 text-[14px] text-ui-ink placeholder:text-ui-faint transition-colors focus:border-ui-accent focus:outline-none focus:ring-2 focus:ring-ui-accent/25';
+    const labelClass = 'mb-1.5 block text-[11px] font-semibold uppercase tracking-[0.14em] text-ui-faint';
+    const legendClass = 'mb-4 border-b border-ui-line pb-2 text-[13px] font-semibold tracking-tight text-ui-ink';
 
     return (
-        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 print:hidden">
-            <div className="bg-arcade-panel border-2 border-arcade-border w-full max-w-4xl max-h-[90vh] flex flex-col shadow-[0_0_24px_#ff2bd6]">
+        <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm print:hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Edit resume"
+            onClick={onClose}
+        >
+            <div
+                className="flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-ui-lineStrong bg-ui-surface shadow-pop"
+                onClick={e => e.stopPropagation()}
+            >
                 {/* Modal Header */}
-                <div className="bg-arcade-header text-arcade-headerText border-b-2 border-arcade-border px-4 py-2 font-pixel flex justify-between items-center text-[12px] uppercase tracking-wider">
-                    <span className="neon-text">Edit Resume for Application</span>
-                    <button onClick={onClose} className="text-arcade-linkHover hover:text-arcade-yellow font-bold px-2 normal-case tracking-normal text-[16px]">✕</button>
+                <div className="flex items-center justify-between gap-4 border-b border-ui-line px-5 py-4">
+                    <div>
+                        <h2 className="text-[15px] font-semibold tracking-tight text-ui-ink">Tailor resume for this application</h2>
+                        <p className="mt-0.5 text-[13px] text-ui-faint">Adjust the content, then export to PDF.</p>
+                    </div>
+                    <button
+                        onClick={onClose}
+                        aria-label="Close"
+                        className="rounded-lg border border-ui-line px-2.5 py-1 text-ui-muted transition-colors hover:border-ui-lineStrong hover:text-ui-ink"
+                    >
+                        ✕
+                    </button>
                 </div>
 
                 {/* Modal Body */}
-                <div className="p-4 sm:p-6 overflow-y-auto flex-1 space-y-6 text-arcade-text text-[14px]">
-                    <div className="bg-arcade-bg border-2 border-arcade-yellow p-3 text-arcade-yellow text-[13px] mb-4">
-                        {'>'} Note: Changes made here are temporary and will only affect the printed/downloaded PDF. Refreshing the page will restore the original data.
+                <div className="flex-1 space-y-8 overflow-y-auto p-5 text-[14px] sm:p-6">
+                    <div className="rounded-lg border border-ui-amber/25 bg-ui-amber/5 px-4 py-3 text-[13px] text-ui-amber">
+                        Changes here are temporary — they only affect the printed PDF. Refreshing restores the original data.
                     </div>
 
                     {/* Basic Info */}
                     <section>
-                        <h3 className="font-pixel text-[12px] text-arcade-accent border-b-2 border-arcade-border mb-3 pb-2">Basic Information</h3>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <h3 className={legendClass}>Basic information</h3>
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                             <div>
-                                <label className="block text-arcade-border2 mb-1">Name</label>
+                                <label className={labelClass}>Name</label>
                                 <input
                                     type="text"
                                     value={formData.name}
@@ -86,7 +117,7 @@ export const EditModal: React.FC<EditModalProps> = ({
                                 />
                             </div>
                             <div>
-                                <label className="block text-arcade-border2 mb-1">Target Job Title</label>
+                                <label className={labelClass}>Target job title</label>
                                 <input
                                     type="text"
                                     value={formData.title}
@@ -96,22 +127,24 @@ export const EditModal: React.FC<EditModalProps> = ({
                             </div>
                         </div>
                         <div className="mt-4">
-                            <label className="block text-arcade-border2 mb-1">Professional Summary</label>
+                            <label className={labelClass}>Professional summary</label>
                             <textarea
                                 value={formData.summary}
                                 onChange={(e) => setFormData({...formData, summary: e.target.value})}
-                                className={`${inputClass} h-32`}
+                                className={`${inputClass} h-32 resize-y leading-relaxed`}
                             />
                         </div>
                     </section>
 
                     {/* Skills */}
                     <section>
-                        <h3 className="font-pixel text-[12px] text-arcade-accent border-b-2 border-arcade-border mb-3 pb-2">Technical Skills (Comma separated)</h3>
+                        <h3 className={legendClass}>Technical skills <span className="font-normal text-ui-faint">(comma separated)</span></h3>
                         <div className="space-y-3">
                             {formData.skills.map((skillGroup, index) => (
-                                <div key={index} className="flex flex-col sm:flex-row sm:items-center gap-2">
-                                    <label className="sm:w-48 font-bold text-[12px] text-arcade-yellow">{skillGroup.category}</label>
+                                <div key={index} className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                                    <label className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ui-faint sm:w-44 sm:shrink-0">
+                                        {skillGroup.category}
+                                    </label>
                                     <input
                                         type="text"
                                         value={skillGroup.skills.join(', ')}
@@ -125,13 +158,13 @@ export const EditModal: React.FC<EditModalProps> = ({
 
                     {/* Experience */}
                     <section>
-                        <h3 className="font-pixel text-[12px] text-arcade-accent border-b-2 border-arcade-border mb-3 pb-2">Professional Experience</h3>
-                        <div className="space-y-6">
+                        <h3 className={legendClass}>Professional experience</h3>
+                        <div className="space-y-4">
                             {formData.experience.map((exp, index) => (
-                                <div key={index} className="bg-arcade-bg border-2 border-arcade-border p-3">
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                                <div key={index} className="rounded-xl border border-ui-line bg-ui-elevated p-4">
+                                    <div className="mb-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
                                         <div>
-                                            <label className="block text-arcade-border2 text-[12px] mb-1">Job Title</label>
+                                            <label className={labelClass}>Job title</label>
                                             <input
                                                 type="text"
                                                 value={exp.title}
@@ -140,7 +173,7 @@ export const EditModal: React.FC<EditModalProps> = ({
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-arcade-border2 text-[12px] mb-1">Company</label>
+                                            <label className={labelClass}>Company</label>
                                             <input
                                                 type="text"
                                                 value={exp.company}
@@ -150,11 +183,11 @@ export const EditModal: React.FC<EditModalProps> = ({
                                         </div>
                                     </div>
                                     <div>
-                                        <label className="block text-arcade-border2 text-[12px] mb-1">Highlights (One per line)</label>
+                                        <label className={labelClass}>Highlights <span className="normal-case tracking-normal text-ui-faint">(one per line)</span></label>
                                         <textarea
                                             value={exp.highlights.join('\n')}
                                             onChange={(e) => handleExperienceHighlightsChange(index, e.target.value)}
-                                            className={`${inputClass} h-32 whitespace-pre`}
+                                            className={`${inputClass} h-32 resize-y whitespace-pre leading-relaxed`}
                                         />
                                     </div>
                                 </div>
@@ -164,40 +197,43 @@ export const EditModal: React.FC<EditModalProps> = ({
 
                     {/* Projects Selection */}
                     <section>
-                        <h3 className="font-pixel text-[12px] text-arcade-accent border-b-2 border-arcade-border mb-3 pb-2">Projects to Include</h3>
-                        <div className="space-y-2 max-h-48 overflow-y-auto border-2 border-arcade-border p-2 bg-arcade-bg">
+                        <h3 className={legendClass}>Projects to include</h3>
+                        <div className="max-h-56 space-y-1 overflow-y-auto rounded-xl border border-ui-line bg-ui-elevated p-2">
                             {repos.map(repo => (
-                                <label key={repo.id} className="flex items-start gap-2 cursor-pointer hover:bg-arcade-tag p-1">
+                                <label
+                                    key={repo.id}
+                                    className="flex cursor-pointer items-start gap-3 rounded-lg p-2 transition-colors hover:bg-ui-hover"
+                                >
                                     <input
                                         type="checkbox"
                                         checked={localSelectedRepoIds.includes(repo.id)}
                                         onChange={() => handleRepoToggle(repo.id)}
-                                        className="mt-1 accent-arcade-accent"
+                                        className="mt-1 h-4 w-4 shrink-0 accent-ui-accent"
                                     />
                                     <div>
-                                        <div className="font-bold text-[13px] text-arcade-text">{repo.name}</div>
-                                        <div className="text-[11px] text-arcade-muted">{repo.description || 'No description'}</div>
+                                        <div className="text-[14px] font-medium text-ui-ink">{repo.name}</div>
+                                        <div className="text-[12px] text-ui-faint">{repo.description || 'No description'}</div>
                                     </div>
                                 </label>
                             ))}
-                            {repos.length === 0 && <div className="text-arcade-muted text-[12px] p-2">No projects available.</div>}
+                            {repos.length === 0 && <div className="p-2 text-[13px] text-ui-faint">No projects available.</div>}
                         </div>
                     </section>
                 </div>
 
                 {/* Modal Footer */}
-                <div className="border-t-2 border-arcade-border p-4 bg-arcade-header flex justify-end gap-3">
+                <div className="flex justify-end gap-3 border-t border-ui-line bg-ui-bg/40 px-5 py-4">
                     <button
                         onClick={onClose}
-                        className="px-4 py-1.5 border-2 border-arcade-border2 text-arcade-border2 hover:bg-arcade-border2 hover:text-arcade-bg transition-all text-[13px] font-pixel uppercase"
+                        className="rounded-lg border border-ui-line px-4 py-2 text-sm font-medium text-ui-muted transition-colors hover:border-ui-lineStrong hover:text-ui-ink"
                     >
                         Cancel
                     </button>
                     <button
                         onClick={() => onSaveAndPrint(formData, localSelectedRepoIds)}
-                        className="px-6 py-1.5 bg-arcade-accent text-arcade-bg font-bold hover:bg-arcade-yellow transition-colors text-[13px] font-pixel uppercase shadow-[3px_3px_0_0_#00fff9]"
+                        className="rounded-lg bg-ui-accent px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-ui-accentSoft"
                     >
-                        Save & Print
+                        Save & print
                     </button>
                 </div>
             </div>

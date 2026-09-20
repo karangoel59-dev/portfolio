@@ -7,22 +7,30 @@ interface ExperienceCardProps {
 
 export const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience }) => {
     return (
-        <article className="mb-6 pb-6 border-b-2 border-dashed border-arcade-border last:border-0 last:mb-0 last:pb-0">
-            <header className="mb-2">
-                <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
-                    <h3 className="text-[19px] font-bold text-arcade-accent">{experience.title}</h3>
-                    <span className="text-[14px] text-arcade-bg bg-arcade-yellow px-1.5 whitespace-nowrap">
+        <article className="relative mb-7 border-l border-ui-line pb-7 pl-6 last:mb-0 last:border-transparent last:pb-0">
+            {/* Timeline marker */}
+            <span
+                className="absolute -left-[4px] top-[7px] h-[7px] w-[7px] rounded-full bg-ui-accent ring-4 ring-ui-surface"
+                aria-hidden="true"
+            />
+
+            <header className="mb-3">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                    <h3 className="text-[17px] font-semibold tracking-tight text-ui-ink">{experience.title}</h3>
+                    <span className="whitespace-nowrap rounded-full border border-ui-line bg-ui-elevated px-2.5 py-0.5 text-[11px] font-medium tabular-nums text-ui-muted">
                         {experience.startDate} – {experience.endDate}
                     </span>
                 </div>
-                <div className="text-[15px] text-arcade-border2">
-                    {experience.company} · {experience.location}
+                <div className="mt-0.5 text-sm text-ui-muted">
+                    <span className="font-medium text-ui-accentSoft">{experience.company}</span>
+                    <span className="mx-1.5 text-ui-faint">·</span>
+                    <span>{experience.location}</span>
                 </div>
             </header>
 
-            <ul className="pl-5 space-y-1.5 list-none">
+            <ul className="ml-4 list-disc space-y-1.5 text-[15px] text-ui-muted marker:text-ui-lineStrong">
                 {experience.highlights.map((highlight, index) => (
-                    <li key={index} className="before:content-['▸_'] before:text-arcade-border2">{highlight}</li>
+                    <li key={index} className="pl-1">{highlight}</li>
                 ))}
             </ul>
         </article>
