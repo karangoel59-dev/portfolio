@@ -24,3 +24,9 @@ Thumbs.db
 # Editor files
 .vscode/
 .idea/
+
+# Personal documents (IDs, payslips, letters) and resume files never belong in this public repo
+*.zip
+*.pdf
+*.docx
+Proof*/
