@@ -1,282 +1,256 @@
-import React, { useState, useEffect } from 'react';
-import { resumeData as initialResumeData } from './data';
-import { Section } from './components/Section';
-import { ExperienceCard } from './components/ExperienceCard';
-import { GithubProjects } from './components/GithubProjects';
-import { ClassicResume } from './components/ClassicResume';
-import { EditModal } from './components/EditModal';
-import { GithubRepo, ResumeData } from './types';
+import { useState } from "react";
+import { portfolioData as data, careerEvents } from "./data";
+import { Section } from "./components/Section";
+import { ExperienceCard } from "./components/ExperienceCard";
+import { ProjectCard } from "./components/ProjectCard";
+import "./site.css";
 
-const NAV_LINKS = [
-    { href: '#summary', label: 'Summary' },
-    { href: '#skills', label: 'Skills' },
-    { href: '#experience', label: 'Experience' },
-    { href: '#projects', label: 'Projects' },
-    { href: '#education', label: 'Education' },
-];
+const nav = [
+  ["work", "Work"],
+  ["projects", "Projects"],
+  ["journey", "Journey"],
+  ["education", "Education"],
+] as const;
 
-const chipClass =
-    'rounded-md border border-ui-line bg-ui-elevated px-2.5 py-1 text-[12px] text-ui-muted transition-colors hover:border-ui-lineStrong hover:text-ui-ink';
-
-/**
- * The edit modal keeps raw textarea/comma input so blank lines stay typeable while editing.
- * Strip them here, on save, so empty bullets and empty skill chips never reach the PDF as
- * blank lines that still consume list spacing.
- */
-const normalizeResumeData = (data: ResumeData): ResumeData => ({
-    ...data,
-    summary: data.summary.trim(),
-    skills: data.skills.map(group => ({
-        ...group,
-        skills: group.skills.map(skill => skill.trim()).filter(Boolean),
-    })),
-    experience: data.experience.map(exp => ({
-        ...exp,
-        highlights: exp.highlights.map(highlight => highlight.trim()).filter(Boolean),
-    })),
-});
-
-const App: React.FC = () => {
-    const [resumeState, setResumeState] = useState<ResumeData>(initialResumeData);
-    const [repos, setRepos] = useState<GithubRepo[]>([]);
-    const [selectedRepoIds, setSelectedRepoIds] = useState<number[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-    
-    // Modal and Print state
-    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-    const [shouldPrint, setShouldPrint] = useState(false);
-
-    useEffect(() => {
-        const fetchRepos = async () => {
-            try {
-                const urlParts = resumeState.contact.github.split('/');
-                const username = urlParts[urlParts.length - 1] || urlParts[urlParts.length - 2];
-                
-                const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=10`);
-                
-                if (!response.ok) {
-                    throw new Error(`GitHub API responded with status: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                setRepos(data);
-                // By default, select the first 3 repos for the printed resume
-                setSelectedRepoIds(data.slice(0, 3).map((r: GithubRepo) => r.id));
-            } catch (err: any) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchRepos();
-    }, [resumeState.contact.github]);
-
-    // Handle the actual print action after state has updated and modal has closed
-    useEffect(() => {
-        if (shouldPrint) {
-            window.print();
-            setShouldPrint(false);
-        }
-    }, [shouldPrint]);
-
-    const handleSaveAndPrint = (newData: ResumeData, newSelectedRepoIds: number[]) => {
-        setResumeState(normalizeResumeData(newData));
-        setSelectedRepoIds(newSelectedRepoIds);
-        setIsEditModalOpen(false);
-        // Small delay to allow React to re-render the DOM with new data before invoking print dialog
-        setTimeout(() => {
-            setShouldPrint(true);
-        }, 150);
-    };
-
-    const initials = resumeState.name
-        .split(' ')
-        .map((part: string) => part[0])
-        .join('')
-        .slice(0, 2)
-        .toUpperCase();
-
-    return (
-        <>
-            {/* PORTFOLIO LAYOUT - Visible on screen, hidden on print */}
-            <div className="mx-auto max-w-4xl print:hidden">
-                {/* Site Navigation */}
-                <header className="sticky top-0 z-30 -mx-4 mb-10 border-b border-ui-line bg-ui-bg/80 px-4 py-3 backdrop-blur-md sm:-mx-6 sm:px-6 md:-mx-8 md:px-8">
-                    <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-3">
-                        <a href="#top" className="flex items-center gap-2.5 font-semibold tracking-tight text-ui-ink">
-                            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-ui-accent text-[13px] font-bold text-white">
-                                {initials}
-                            </span>
-                            <span className="text-sm">{resumeState.name}</span>
-                        </a>
-                        <nav className="flex flex-wrap gap-x-5 gap-y-1 text-[13px] text-ui-muted">
-                            {NAV_LINKS.map(link => (
-                                <a key={link.href} href={link.href} className="transition-colors hover:text-ui-accentSoft">
-                                    {link.label}
-                                </a>
-                            ))}
-                        </nav>
-                    </div>
-                </header>
-
-                {/* Hero */}
-                <div id="top" className="mb-12 scroll-mt-24 animate-fade-up">
-                    <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
-                        <div>
-                            <h1 className="text-3xl font-bold tracking-tight text-ui-ink sm:text-4xl">
-                                {resumeState.name}
-                            </h1>
-                            <p className="mt-1.5 text-base text-ui-accentSoft sm:text-lg">{resumeState.title}</p>
-                        </div>
-
-                        <button
-                            onClick={() => setIsEditModalOpen(true)}
-                            className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-ui-accent px-4 py-2.5 text-sm font-medium text-white shadow-card transition-colors hover:bg-ui-accentSoft"
-                            title="Edit and Print/Save as PDF"
-                        >
-                            <span aria-hidden="true">↓</span> Print Resume
-                        </button>
-                    </div>
-
-                    <dl className="flex flex-col gap-3 border-t border-ui-line pt-5 text-[15px] sm:flex-row sm:flex-wrap sm:gap-x-8">
-                        <div className="flex items-baseline gap-2">
-                            <dt className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ui-faint">Location</dt>
-                            <dd className="text-ui-muted">{resumeState.contact.location}</dd>
-                        </div>
-                        <div className="flex flex-wrap items-baseline gap-2">
-                            <dt className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ui-faint">Contact</dt>
-                            <dd className="flex flex-wrap items-center gap-x-2 text-ui-muted">
-                                <a href={`mailto:${resumeState.contact.email}`} className="text-ui-accentSoft hover:text-ui-teal">
-                                    {resumeState.contact.email}
-                                </a>
-                                <span className="text-ui-lineStrong">/</span>
-                                <a href={`tel:${resumeState.contact.phone.replace(/\s/g, '')}`} className="text-ui-accentSoft hover:text-ui-teal">
-                                    {resumeState.contact.phone}
-                                </a>
-                            </dd>
-                        </div>
-                        <div className="flex flex-wrap items-baseline gap-2">
-                            <dt className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ui-faint">Links</dt>
-                            <dd className="flex flex-wrap items-center gap-x-2 text-ui-muted">
-                                <a href={`https://${resumeState.contact.linkedin}`} target="_blank" rel="noopener noreferrer" className="text-ui-accentSoft hover:text-ui-teal">
-                                    LinkedIn
-                                </a>
-                                <span className="text-ui-lineStrong">/</span>
-                                <a href={`https://${resumeState.contact.github}`} target="_blank" rel="noopener noreferrer" className="text-ui-accentSoft hover:text-ui-teal">
-                                    GitHub
-                                </a>
-                                {resumeState.contact.portfolio && (
-                                    <>
-                                        <span className="text-ui-lineStrong">/</span>
-                                        <a href="#top" className="text-ui-accentSoft hover:text-ui-teal">Portfolio</a>
-                                    </>
-                                )}
-                            </dd>
-                        </div>
-                    </dl>
+export default function App() {
+  const [selectedEvent, setSelectedEvent] = useState(careerEvents.length - 1);
+  const event = careerEvents[selectedEvent];
+  const resumeUrl = `${import.meta.env.BASE_URL}Karan_Goel_Resume.pdf`;
+  return (
+    <>
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
+      <header className="site-header">
+        <a className="wordmark" href="#top" aria-label="Karan Goel, home">
+          kg<span>.</span>
+        </a>
+        <nav aria-label="Main navigation">
+          {nav.map(([id, label]) => (
+            <a key={id} href={`#${id}`}>
+              {label}
+            </a>
+          ))}
+        </nav>
+        <a className="header-contact" href={`mailto:${data.contact.email}`}>
+          Let’s talk <span aria-hidden="true">↗</span>
+        </a>
+      </header>
+      <main id="main">
+        <section className="hero" id="top" aria-labelledby="hero-title">
+          <div className="hero-grid" aria-hidden="true" />
+          <div className="hero-copy">
+            <p className="eyebrow">
+              <span className="status-dot" />
+              {data.title}
+            </p>
+            <h1 id="hero-title">
+              Karan <span>Goel.</span>
+            </h1>
+            <p className="hero-line">AI agents. Reliable backends.</p>
+            <p className="hero-description">
+              I build production agents and the systems around them: retrieval,
+              tool execution, billing and observability. Previously, I worked on
+              cloud infrastructure at Cleartrip.
+            </p>
+            <div className="hero-actions">
+              <a className="button primary" href="#work">
+                Explore my work <span aria-hidden="true">↓</span>
+              </a>
+              <a className="button secondary" href={resumeUrl} download>
+                Download resume <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+            <p className="hero-location">
+              Pune, India <span>·</span> Open to global relocation
+            </p>
+          </div>
+          <div className="system-visual" aria-hidden="true">
+            <div className="orbit orbit-one" />
+            <div className="orbit orbit-two" />
+            <svg viewBox="0 0 430 390" className="system-lines">
+              <path d="M75 100 L210 165 L355 95 M210 165 L95 295 M210 165 L340 295 M95 295 L340 295" />
+              <circle cx="210" cy="165" r="9" />
+              <circle cx="75" cy="100" r="5" />
+              <circle cx="355" cy="95" r="5" />
+              <circle cx="95" cy="295" r="5" />
+              <circle cx="340" cy="295" r="5" />
+            </svg>
+            <span className="visual-node node-main">AGENT RUNTIME</span>
+            <span className="visual-node node-tools">TOOLS</span>
+            <span className="visual-node node-data">RETRIEVAL</span>
+            <span className="visual-node node-backend">BACKEND</span>
+            <span className="visual-node node-tracing">TRACING</span>
+            <span className="visual-caption">THE SYSTEM AROUND THE MODEL</span>
+          </div>
+        </section>
+        <div className="focus-strip" aria-label="Areas of work">
+          <span>Agent orchestration</span>
+          <span>Retrieval & data</span>
+          <span>Backend reliability</span>
+          <span>Cloud infrastructure</span>
+        </div>
+        <Section
+          id="work"
+          number="01"
+          title="Work"
+          description="Production AI today. Infrastructure experience behind it."
+        >
+          <div className="experience-list">
+            {data.experience.map((exp) => (
+              <ExperienceCard
+                key={`${exp.company}-${exp.startDate}`}
+                experience={exp}
+              />
+            ))}
+          </div>
+        </Section>
+        <Section
+          id="projects"
+          number="02"
+          title="Selected projects"
+          description="Tools, experiments and earlier work you can explore."
+        >
+          <div className="projects-grid">
+            {data.projects.map((project) => (
+              <ProjectCard key={project.title} project={project} />
+            ))}
+          </div>
+          <a
+            className="text-link projects-more"
+            href={data.contact.github}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Explore more on GitHub <span aria-hidden="true">↗</span>
+          </a>
+        </Section>
+        <Section
+          id="journey"
+          number="03"
+          title="The journey"
+          description="From student projects to infrastructure and applied AI."
+        >
+          <div className="journey-panel">
+            <div className="journey-track" aria-label="Career milestones">
+              {careerEvents.map((item, index) => (
+                <button
+                  key={item.year}
+                  type="button"
+                  className={`milestone ${selectedEvent === index ? "selected" : ""}`}
+                  aria-pressed={selectedEvent === index}
+                  aria-controls="milestone-detail"
+                  onClick={() => setSelectedEvent(index)}
+                >
+                  <span className="milestone-year">{item.year}</span>
+                  <span
+                    className={`milestone-dot ${item.kind}`}
+                    aria-hidden="true"
+                  />
+                  <span className="milestone-title">{item.title}</span>
+                </button>
+              ))}
+            </div>
+            <div
+              id="milestone-detail"
+              className="milestone-detail"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              <p className="eyebrow">
+                {event.kind} <span>·</span> {event.dates}
+              </p>
+              <h3>{event.subtitle}</h3>
+              <p>{event.description}</p>
+            </div>
+          </div>
+          <p className="journey-note">
+            The early-work archive preserves student code from 2018–2020. The
+            master’s and capstone are education and project work.
+          </p>
+        </Section>
+        <Section
+          id="skills"
+          number="04"
+          title="What I work with"
+          description="The tools I use across agents, backend systems and infrastructure."
+        >
+          <div className="skills-grid">
+            {data.skills.map((group) => (
+              <div className="skill-group" key={group.category}>
+                <h3>{group.category}</h3>
+                <div className="chips">
+                  {group.skills.map((skill) => (
+                    <span className="chip" key={skill}>
+                      {skill}
+                    </span>
+                  ))}
                 </div>
-
-                <main>
-                    {/* Professional Summary */}
-                    <Section id="summary" title="Professional Summary">
-                        <p className="whitespace-pre-wrap text-ui-muted">
-                            {resumeState.summary}
-                        </p>
-                    </Section>
-
-                    {/* Technical Skills */}
-                    <Section id="skills" title="Technical Skills">
-                        <div className="space-y-5">
-                            {resumeState.skills.map((skillGroup, index) => (
-                                <div key={index} className="flex flex-col gap-x-4 gap-y-2 sm:flex-row sm:items-start">
-                                    <div className="shrink-0 pt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-ui-faint sm:w-44">
-                                        {skillGroup.category}
-                                    </div>
-                                    <div className="flex flex-wrap gap-1.5">
-                                        {skillGroup.skills.map((skill, sIndex) => (
-                                            <span key={sIndex} className={chipClass}>
-                                                {skill}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </Section>
-
-                    {/* Professional Experience */}
-                    <Section id="experience" title="Professional Experience">
-                        {resumeState.experience.map((exp, index) => (
-                            <ExperienceCard key={index} experience={exp} />
-                        ))}
-                    </Section>
-
-                    {/* Projects (Dynamic from GitHub) */}
-                    <Section id="projects" title="GitHub Projects">
-                        <GithubProjects repos={repos} loading={loading} error={error} />
-                    </Section>
-
-                    {/* Education & Competencies */}
-                    <div className="grid grid-cols-1 gap-x-6 md:grid-cols-2">
-                        <Section id="education" title="Education">
-                            {resumeState.education.map((edu, index) => (
-                                <div key={index} className="mb-5 last:mb-0">
-                                    <div className="font-semibold tracking-tight text-ui-ink">{edu.degree}</div>
-                                    <div className="mt-0.5 text-sm text-ui-accentSoft">{edu.institution}</div>
-                                    <div className="mt-0.5 text-[13px] tabular-nums text-ui-faint">
-                                        {edu.startDate} – {edu.endDate} · {edu.location}
-                                    </div>
-                                </div>
-                            ))}
-                        </Section>
-
-                        <Section title="Core Competencies">
-                            <div className="mb-5">
-                                <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-ui-faint">Soft Skills</div>
-                                <div className="flex flex-wrap gap-1.5">
-                                    {resumeState.coreCompetencies.softSkills.map((skill, i) => (
-                                        <span key={i} className={chipClass}>{skill}</span>
-                                    ))}
-                                </div>
-                            </div>
-                            <div>
-                                <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-ui-faint">Languages</div>
-                                <div className="flex flex-wrap gap-1.5">
-                                    {resumeState.coreCompetencies.languages.map((lang, i) => (
-                                        <span key={i} className={chipClass}>{lang}</span>
-                                    ))}
-                                </div>
-                            </div>
-                        </Section>
-                    </div>
-                </main>
-
-                <footer className="mt-4 border-t border-ui-line pt-6 text-center text-[13px] text-ui-faint">
-                    <p>© {new Date().getFullYear()} {resumeState.name} · Built with React and Tailwind CSS</p>
-                </footer>
-            </div>
-
-            {/* CLASSIC RESUME LAYOUT - Hidden on screen, visible on print */}
-            <div className="hidden print:block">
-                <ClassicResume 
-                    data={resumeState} 
-                    repos={repos.filter(r => selectedRepoIds.includes(r.id))} 
-                />
-            </div>
-
-            {/* Edit Modal */}
-            <EditModal 
-                isOpen={isEditModalOpen} 
-                onClose={() => setIsEditModalOpen(false)} 
-                data={resumeState}
-                repos={repos}
-                initialSelectedRepoIds={selectedRepoIds}
-                onSaveAndPrint={handleSaveAndPrint}
-            />
-        </>
-    );
-};
-
-export default App;
+              </div>
+            ))}
+          </div>
+        </Section>
+        <Section
+          id="education"
+          number="05"
+          title="Education"
+          description="Computer science foundations, with a focus on building."
+        >
+          <div className="education-grid">
+            {data.education.map((edu) => (
+              <article className="education-card" key={edu.degree}>
+                <p className="eyebrow">
+                  {edu.startDate} – {edu.endDate}
+                </p>
+                <h3>{edu.degree}</h3>
+                <p className="school">{edu.institution}</p>
+                <p>{edu.detail}</p>
+              </article>
+            ))}
+          </div>
+        </Section>
+        <section
+          id="contact"
+          className="contact-section"
+          aria-labelledby="contact-title"
+        >
+          <p className="eyebrow">NEXT CHAPTER</p>
+          <h2 id="contact-title">Have a system to build?</h2>
+          <p>
+            I’m open to applied AI, backend and platform engineering
+            opportunities.
+          </p>
+          <a className="contact-email" href={`mailto:${data.contact.email}`}>
+            {data.contact.email} <span aria-hidden="true">↗</span>
+          </a>
+          <div className="contact-links">
+            <a
+              href={data.contact.github}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub ↗
+            </a>
+            <a
+              href={data.contact.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              LinkedIn ↗
+            </a>
+            <a href={resumeUrl} download>
+              Resume ↓
+            </a>
+          </div>
+        </section>
+      </main>
+      <footer className="site-footer">
+        <span>
+          © {new Date().getFullYear()} {data.name}
+        </span>
+        <span>Applied AI · Backend · Infrastructure</span>
+        <a href="#top">Back to top ↑</a>
+      </footer>
+    </>
+  );
+}

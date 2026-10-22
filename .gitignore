@@ -28,5 +28,6 @@ Thumbs.db
 # Personal documents (IDs, payslips, letters) and resume files never belong in this public repo
 *.zip
 *.pdf
+!frontend/public/Karan_Goel_Resume.pdf
 *.docx
 Proof*/

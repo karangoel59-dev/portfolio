@@ -1,170 +1,230 @@
-import { ResumeData } from './types';
+import type { PortfolioData, CareerEvent } from "./types";
 
-export const resumeData: ResumeData = {
-    name: "KARAN GOEL",
-    title: "Applied AI Engineer — LLM Agents, RAG & Production Backend",
-    contact: {
-        location: "Pune, India (Open to Global Relocation)",
-        phone: "+91 7988965091",
-        email: "karangoel59@zohomail.in",
-        linkedin: "linkedin.com/in/kg59",
-        github: "github.com/karangoel59-dev",
-        portfolio: "karangoel59-dev.github.io/portfolio"
+// Public career copy reconciled with the final resume and user corrections, 22 Oct 2026.
+export const portfolioData: PortfolioData = {
+  name: "Karan Goel",
+  title: "Applied AI & Backend Engineer",
+  contact: {
+    location: "Pune, India",
+    phone: "+91 7988965091",
+    email: "karangoel59@zohomail.in",
+    linkedin: "https://linkedin.com/in/kg59",
+    github: "https://github.com/karangoel59-dev",
+  },
+  summary:
+    "Software engineer building production LLM agents and Python backend systems at Chat360, following two years of full-time DevOps/SRE work at Cleartrip. Combines agent orchestration and retrieval with infrastructure, observability and billing.",
+  skills: [
+    {
+      category: "Backend",
+      skills: [
+        "Python",
+        "Go",
+        "JavaScript/TypeScript",
+        "SQL",
+        "Django/DRF",
+        "asyncio",
+        "Celery",
+        "REST APIs",
+      ],
     },
-    summary: "Applied AI engineer building production LLM agents for enterprise customers. At Chat360 I work across a LangGraph multi-agent runtime and its Django backend, from RAG and tool execution to billing, tracing and PII protection. Before that I spent two years in DevOps/SRE at Flipkart (AWS, Terraform, Kubernetes, observability), so I build agents with production reliability, cost control and monitoring in mind.",
-    skills: [
-        {
-            category: "LLM & Agents",
-            skills: ["LangGraph", "LangChain", "OpenAI / Azure OpenAI APIs", "multi-agent orchestration", "tool calling", "RAG", "MCP", "prompt & context engineering", "semantic caching", "PII masking"]
-        },
-        {
-            category: "Retrieval & Data",
-            skills: ["Qdrant", "Pinecone", "PostgreSQL", "Redis", "SQLAlchemy", "OCR (Tesseract)", "document chunking & ingestion pipelines"]
-        },
-        {
-            category: "Backend",
-            skills: ["Python (asyncio)", "Django / Django REST Framework", "Celery", "REST APIs", "service-to-service auth"]
-        },
-        {
-            category: "LLM Observability",
-            skills: ["Langfuse", "OpenTelemetry", "SigNoz", "token & cost metering", "Prometheus", "Grafana", "ELK", "New Relic"]
-        },
-        {
-            category: "Cloud & DevOps",
-            skills: ["AWS (EC2, S3, IAM, VPC)", "GCP (GKE, BigQuery)", "Azure", "Terraform", "Docker", "Kubernetes", "GitHub Actions", "Jenkins"]
-        },
-        {
-            category: "Languages",
-            skills: ["Python", "SQL", "Go", "JavaScript/TypeScript", "Java", "Shell"]
-        }
-    ],
-    experience: [
-        {
-            title: "Agentic AI Engineer",
-            company: "Chat360",
-            location: "Pune, India",
-            startDate: "March 2026",
-            endDate: "Present",
-            highlights: [
-                "Delivered 110+ Jira tickets through 350+ merged PRs (87 to production) across the LangGraph agent runtime and Django backend.",
-                "Made the agent runtime faster and more reliable: concurrent tool calls (asyncio) cut multi-tool turn latency 55–65%, and token-budget context truncation plus a supervisor fallback ended context-overflow errors and empty replies.",
-                "Led the Pinecone → self-hosted Qdrant migration with zero data loss, and built Club Mahindra’s “Maya” booking agent: RAG over member policies, live resort availability and room recommendations.",
-                "Owned LLM billing and usage analytics, about a quarter of my commits: token metering that covers dropped sessions, per-request cost breakdown, routing simple queries to a lighter model, and AI Insights queries cut from 14s to under 650ms.",
-                "Added Langfuse v4 and OpenTelemetry (SigNoz) tracing, and a PII-masking layer that tokenizes Aadhaar, PAN, phone and card numbers before prompts reach external LLMs."
-            ]
-        },
-        {
-            title: "AI Engineer — Independent Projects",
-            company: "Independent Client Work & Open Source",
-            location: "Remote",
-            startDate: "August 2025",
-            endDate: "February 2026",
-            highlights: [
-                "Designed and deployed a custom multi-agent LLM system for a client (Python, LangChain, OpenAI API), with infrastructure provisioned in Terraform and CI/CD.",
-                "Set up Prometheus and Grafana monitoring for uptime and performance anomalies, and contributed features and fixes to open-source LangChain-based projects."
-            ]
-        },
-        {
-            title: "AI Researcher (Part-time)",
-            company: "University of Wollongong",
-            location: "Wollongong, Australia",
-            startDate: "2024",
-            endDate: "2025",
-            highlights: [
-                "Built and ran 20+ AI agents that analyze behavioral patterns, improving anomaly-detection accuracy by 15%.",
-                "Maintained GitHub Actions CI/CD for model and simulation deployments, cutting deployment time by 20%."
-            ]
-        },
-        {
-            title: "DevOps / SRE Engineer",
-            company: "Flipkart",
-            location: "Bangalore, India",
-            startDate: "June 2021",
-            endDate: "June 2023",
-            highlights: [
-                "Provisioned and managed AWS infrastructure (EC2, VPC, IAM) with Terraform, reducing deployment failures by 25%.",
-                "Ran Kubernetes clusters and CI/CD (Jenkins, Bitbucket Pipelines), and built isolated multi-VPC development environments that made development cycles 30% faster.",
-                "Built cloud cost dashboards from Kubernetes workload data exported to BigQuery, cutting cloud spend by 15%.",
-                "Ran observability on ELK, Grafana and New Relic, led incident root-cause analysis, and drove a security and infrastructure initiative that reduced incidents by 20%."
-            ]
-        },
-        {
-            title: "Software Engineer Intern",
-            company: "Cleartrip",
-            location: "Bangalore, India",
-            startDate: "March 2020",
-            endDate: "May 2021",
-            highlights: [
-                "Migrated workloads from bare-metal servers to GKE, and provisioned AWS infrastructure and QA/staging environments for several teams.",
-                "Automated deployments with shell scripts and debugged microservice connectivity issues (DNS, HTTP)."
-            ]
-        }
-    ],
-    projects: [
-        {
-            title: "kgmail",
-            date: "2026",
-            techStack: "Go, MCP",
-            link: "https://github.com/karangoel59-dev/kgmail",
-            highlights: [
-                "Multi-account email manager and native MCP server in Go that gives AI coding agents read-only inbox access and SMTP sending, released as a single binary through a Homebrew tap."
-            ]
-        },
-        {
-            title: "kgssh",
-            date: "2026",
-            techStack: "Go, MCP",
-            link: "https://github.com/karangoel59-dev/kgssh",
-            highlights: [
-                "SSH alias manager and MCP server in Go that lets AI agents run commands, transfer files over SFTP and check health on remote servers."
-            ]
-        },
-        {
-            title: "activity-dashboard",
-            date: "2026",
-            techStack: "TypeScript, SvelteKit, Azure OpenAI",
-            link: "https://github.com/karangoel59-dev/activity-dashboard",
-            highlights: [
-                "An engineering-metrics dashboard built from git history across repositories, with an LLM classifying each commit by domain and work type."
-            ]
-        },
-        {
-            title: "writehere-agents",
-            date: "2026",
-            techStack: "Python, LLMs",
-            link: "https://github.com/karangoel59-dev/writehere-agents",
-            highlights: [
-                "A recursive DAG-based agent framework: an LLM breaks a high-level prompt into structured sub-tasks and executes them, for example turning one prompt into a multi-section report."
-            ]
-        },
-        {
-            title: "Cognitive Agent Framework",
-            date: "2024 – 2025",
-            techStack: "Python, LangChain, OpenAI API, Streamlit, GCP",
-            link: "https://bit.ly/4xjg0kr",
-            highlights: [
-                "An agent architecture based on dual-process theory, with personality, memory and emotion models, deployed on GCP as a real-time streaming interface for experiments."
-            ]
-        }
-    ],
-    education: [
-        {
-            degree: "Master of Computer Science",
-            institution: "University of Wollongong",
-            location: "Wollongong, Australia",
-            startDate: "2023",
-            endDate: "2025"
-        },
-        {
-            degree: "B.Tech in Computer Science",
-            institution: "Chitkara University",
-            location: "Baddi, India",
-            startDate: "August 2017",
-            endDate: "June 2021"
-        }
-    ],
-    coreCompetencies: {
-        softSkills: ["Process-oriented", "Collaboration", "Workflow optimization", "Leadership", "Strategic thinking", "Mentorship"],
-        languages: ["English", "Hindi", "Japanese (Beginner)"]
-    }
+    {
+      category: "AI & data",
+      skills: [
+        "LangGraph",
+        "LangChain",
+        "OpenAI/Azure OpenAI",
+        "RAG",
+        "Qdrant",
+        "Pinecone",
+        "PostgreSQL",
+        "Redis",
+      ],
+    },
+    {
+      category: "Infrastructure",
+      skills: [
+        "GCP/GKE",
+        "Terraform",
+        "Docker",
+        "Kubernetes",
+        "Jenkins",
+        "GitHub Actions",
+        "Langfuse",
+        "ELK",
+        "New Relic",
+      ],
+    },
+  ],
+  experience: [
+    {
+      title: "Agentic AI Engineer",
+      company: "Chat360 (Sumanel Technology Ventures)",
+      location: "Pune, India",
+      startDate: "Mar 2026",
+      endDate: "Present",
+      highlights: [
+        "Enabled parallel tool execution in the agent runtime using thread pools; added token-aware conversation history truncation.",
+        "Implemented Pinecone-to-Qdrant migration APIs and batch transfer workflows; updated retrieval and vector-store integrations.",
+        "Built Club Mahindra’s Maya RAG pipeline, semantic resort search, live availability checks and resort-ID verification for booking workflows.",
+        "Implemented idempotent session-close billing reconciliation and optimized AI Insights data retrieval; added complexity-based routing to lighter models.",
+        "Migrated Langfuse tracing and callback handling across webhook and LangGraph supervisor paths.",
+        "Fixed DBHub cross-session writes and per-table save state; moved background synchronization to retryable Celery tasks.",
+      ],
+    },
+    {
+      title: "Software Engineer (DevOps / SRE)",
+      company: "Cleartrip (Flipkart Group)",
+      location: "Bangalore, India",
+      startDate: "Jun 2021",
+      endDate: "Jun 2023",
+      highlights: [
+        "Managed GCP/GKE infrastructure with Terraform; authored VPC design documentation for PCI/non-PCI networks, firewall rules, disaster recovery and observability.",
+        "Supported QA migration to GCP and deployment pipelines; tuned Elasticsearch for high-traffic sales and rolled out hotel-service Kibana logging.",
+        "Handled production on-call troubleshooting and cost optimization; integrated Snyk and set up Debezium.",
+      ],
+    },
+    {
+      title: "Software Engineer Intern",
+      company: "Cleartrip",
+      location: "Bangalore, India",
+      startDate: "Mar 2020",
+      endDate: "May 2021",
+      highlights: [
+        "Automated deployments with shell scripts, supported QA/staging infrastructure and debugged DNS/HTTP connectivity; converted directly to full-time employment.",
+      ],
+    },
+  ],
+  projects: [
+    {
+      title: "kgmail",
+      date: "2026",
+      techStack: ["Go", "MCP"],
+      link: "https://github.com/karangoel59-dev/kgmail",
+      category: "Agent tooling",
+      description:
+        "A multi-account email manager with a native Go MCP server. Distributed through Homebrew.",
+    },
+    {
+      title: "kgssh",
+      date: "2026",
+      techStack: ["Go", "CLI"],
+      link: "https://github.com/karangoel59-dev/kgssh",
+      category: "Developer tools",
+      description:
+        "An SSH connection launcher for working across remote machines. Distributed through Homebrew.",
+    },
+    {
+      title: "writehere-agents",
+      date: "2026",
+      techStack: ["Python", "LLMs"],
+      link: "https://github.com/karangoel59-dev/writehere-agents",
+      category: "Agent tooling",
+      description:
+        "A recursive DAG-based framework that turns a high-level prompt into structured subtasks and multi-section outputs.",
+      status: "Archived",
+    },
+    {
+      title: "Irrational Agents",
+      date: "2024–2025",
+      techStack: ["Python", "LangChain", "Phaser", "Azure", "GCP"],
+      link: "https://github.com/Irrational-Agents/Agents-Sandbox",
+      category: "Team capstone",
+      description:
+        "Led the simulation frontend and contributed the socket API, prompts and agent behavior/personality layer. A team MSc capstone, graded Distinction (80).",
+    },
+    {
+      title: "Signature-forgery detection",
+      date: "2023",
+      techStack: ["PyTorch", "Transformers", "ViT"],
+      link: "https://huggingface.co/kg59/vit-base-patch16-224-finetuned-cedar",
+      category: "Applied ML",
+      description:
+        "Fine-tuned a Vision Transformer to classify genuine and forged signatures, then published the model and training results on Hugging Face.",
+    },
+    {
+      title: "Early work archive",
+      date: "2018–2020",
+      techStack: ["C++", "TypeScript", "React"],
+      link: "https://github.com/karangoel59-dev/early-work-archive",
+      category: "Code archive",
+      description:
+        "Recovered student projects: C++ game engines and BFS pathfinding, web APIs, a Messenger booking bot, and early Docker/Jenkins work.",
+      status: "Archived",
+    },
+  ],
+  education: [
+    {
+      degree: "Master of Computer Science",
+      institution: "University of Wollongong, Australia",
+      startDate: "Jul 2023",
+      endDate: "Jul 2025",
+      detail:
+        "Major: Machine Learning and Big Data and Software Engineering · WAM 71.7. High Distinctions: Programming & Data Structures (93), Web Development (91).",
+    },
+    {
+      degree: "Bachelor of Engineering — Computer Science & Engineering",
+      institution: "Chitkara University, Himachal Pradesh, India",
+      startDate: "Aug 2017",
+      endDate: "Jun 2021",
+      detail:
+        "CGPA 9.16/10 · Cleartrip internship credited as final-year co-op training.",
+    },
+  ],
 };
+
+export const careerEvents: CareerEvent[] = [
+  {
+    year: "2017",
+    title: "Programming foundation",
+    kind: "education",
+    dates: "Aug 2017 – Jun 2021",
+    subtitle: "BE · Chitkara University",
+    description:
+      "Computer Science and Engineering, CGPA 9.16/10. Built C++ games, pathfinding and web projects during the degree.",
+  },
+  {
+    year: "2020",
+    title: "First engineering role",
+    kind: "work",
+    dates: "Mar 2020 – May 2021",
+    subtitle: "Software Engineer Intern · Cleartrip",
+    description:
+      "Supported deployments and QA/staging infrastructure. The internship was credited as final-year co-op training.",
+  },
+  {
+    year: "2021",
+    title: "Production infrastructure",
+    kind: "work",
+    dates: "Jun 2021 – Jun 2023",
+    subtitle: "Software Engineer · Cleartrip (Flipkart Group)",
+    description:
+      "Converted directly from the internship. Worked on GCP/GKE, Terraform, network design, observability and production troubleshooting.",
+  },
+  {
+    year: "2023",
+    title: "A deeper CS foundation",
+    kind: "education",
+    dates: "Jul 2023 – Jul 2025",
+    subtitle: "Master of Computer Science · Wollongong",
+    description:
+      "Major in Machine Learning and Big Data and Software Engineering. High Distinctions in programming/data structures and web development.",
+  },
+  {
+    year: "2024",
+    title: "Agents in simulation",
+    kind: "project",
+    dates: "2024 – 2025",
+    subtitle: "Irrational Agents · Team MSc capstone",
+    description:
+      "Led the simulation frontend and contributed APIs, prompts and agent behavior/personality features. Graded Distinction (80).",
+  },
+  {
+    year: "2026",
+    title: "Applied AI in production",
+    kind: "work",
+    dates: "Mar 2026 – Present",
+    subtitle: "Agentic AI Engineer · Chat360",
+    description:
+      "Builds agent runtime features, retrieval integrations, billing, tracing and reliable backend workflows.",
+  },
+];
