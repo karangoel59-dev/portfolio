@@ -1,145 +1,38 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0b0f17">
-    <title>Karan Goel - Software Engineer, Cloud Infrastructure & Agentic AI</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        ui: {
-                            bg: '#0b0f17',          // page background
-                            surface: '#111825',     // section panels
-                            elevated: '#161f2e',    // nested cards, inputs, chips
-                            hover: '#1b2536',       // hover state for elevated surfaces
-                            line: '#1f2b3d',        // default hairline border
-                            lineStrong: '#2e3f58',  // emphasised border / dividers
-                            ink: '#e6edf6',         // primary text
-                            muted: '#9aa8bd',       // secondary text
-                            faint: '#6b7a91',       // labels, meta, captions
-                            accent: '#6366f1',      // primary accent (indigo)
-                            accentSoft: '#818cf8',  // accent hover / links
-                            teal: '#2dd4bf',        // secondary accent
-                            amber: '#f5b544'        // highlight / dates
-                        },
-                        resume: {
-                            primary: '#111827',
-                            secondary: '#4b5563',
-                            accent: '#2b7a78' // The teal/blue color from the original resume
-                        }
-                    },
-                    fontFamily: {
-                        'sans': ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
-                        'mono': ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
-                        'resume': ['Arial', 'Helvetica', 'sans-serif']
-                    },
-                    boxShadow: {
-                        'card': '0 1px 2px rgba(0, 0, 0, 0.35), 0 12px 32px -16px rgba(0, 0, 0, 0.7)',
-                        'pop': '0 24px 64px -20px rgba(0, 0, 0, 0.8)'
-                    },
-                    keyframes: {
-                        'fade-up': {
-                            '0%': { opacity: '0', transform: 'translateY(6px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' }
-                        }
-                    },
-                    animation: {
-                        'fade-up': 'fade-up 0.35s ease-out both'
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        @media screen {
-            html {
-                scroll-behavior: smooth;
-            }
-
-            a { text-decoration: none; }
-
-            body {
-                position: relative;
-                min-height: 100vh;
-                text-rendering: optimizeLegibility;
-            }
-
-            /* Soft ambient wash behind the content - replaces the old CRT overlay */
-            body::before {
-                content: '';
-                position: fixed;
-                inset: 0;
-                pointer-events: none;
-                z-index: -1;
-                background:
-                    radial-gradient(60rem 30rem at 50% -10rem, rgba(99, 102, 241, 0.16), transparent 70%),
-                    radial-gradient(40rem 24rem at 100% 0%, rgba(45, 212, 191, 0.07), transparent 70%);
-            }
-
-            ::selection {
-                background: rgba(99, 102, 241, 0.35);
-                color: #ffffff;
-            }
-
-            :focus-visible {
-                outline: 2px solid #818cf8;
-                outline-offset: 2px;
-                border-radius: 2px;
-            }
-
-            /* Thin, theme-matched scrollbars */
-            * {
-                scrollbar-width: thin;
-                scrollbar-color: #2e3f58 transparent;
-            }
-            ::-webkit-scrollbar { width: 10px; height: 10px; }
-            ::-webkit-scrollbar-track { background: transparent; }
-            ::-webkit-scrollbar-thumb {
-                background: #2e3f58;
-                border-radius: 9999px;
-                border: 3px solid transparent;
-                background-clip: content-box;
-            }
-            ::-webkit-scrollbar-thumb:hover { background-color: #3d5273; }
-
-            @media (prefers-reduced-motion: reduce) {
-                html { scroll-behavior: auto; }
-                *, *::before, *::after {
-                    animation-duration: 0.01ms !important;
-                    animation-iteration-count: 1 !important;
-                    transition-duration: 0.01ms !important;
-                }
-            }
-        }
-
-        /* Print styles for saving as PDF - always the clean professional layout */
-        @media print {
-            @page {
-                margin: 0.5in;
-                size: letter;
-            }
-            body {
-                background-color: #ffffff !important;
-                padding: 0 !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            /* Ensure page breaks don't cut items in half */
-            .print-break-inside-avoid {
-                break-inside: avoid;
-            }
-        }
-    </style>
-</head>
-<body class="bg-ui-bg text-ui-ink font-sans text-[15px] leading-relaxed antialiased p-4 sm:p-6 md:p-8 print:p-0 print:bg-white print:text-[14px] print:font-resume">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a101a" />
+    <meta
+      name="description"
+      content="Karan Goel — Applied AI and Backend Engineer. Production agents, retrieval, billing and observability, with infrastructure experience at Cleartrip."
+    />
+    <meta
+      property="og:title"
+      content="Karan Goel — Applied AI & Backend Engineer"
+    />
+    <meta
+      property="og:description"
+      content="Production AI agents, reliable backends, and a portfolio of developer tools and applied ML projects."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://karangoel59-dev.github.io/portfolio/"
+    />
+    <link rel="canonical" href="https://karangoel59-dev.github.io/portfolio/" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <title>Karan Goel — Applied AI & Backend Engineer</title>
+  </head>
+  <body>
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
-</body>
+  </body>
 </html>

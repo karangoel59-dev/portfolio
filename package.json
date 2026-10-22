@@ -1,14 +1,14 @@
 {
   "name": "karan-goel-portfolio",
-  "workspaces": ["frontend", "backend"],
+  "private": true,
+  "workspaces": [
+    "frontend"
+  ],
   "scripts": {
-    "dev-frontend": "npm run dev --prefix frontend",
-    "dev-backend": "npm run dev --prefix backend",
-    "dev": "concurrently \"npm run dev-frontend\" \"npm run dev-backend\"",
-    "build": "npm run build --prefix frontend",
-    "preview": "npm run preview --prefix frontend"
-  },
-  "devDependencies": {
-    "concurrently": "latest"
+    "dev": "npm run dev --workspace frontend",
+    "build": "npm run build --workspace frontend",
+    "typecheck": "npm run typecheck --workspace frontend",
+    "preview": "npm run preview --workspace frontend",
+    "prebuild": "npm run typecheck"
   }
 }

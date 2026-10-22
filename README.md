@@ -1,49 +1,32 @@
 # Karan Goel Portfolio
 
-This repository contains a personal portfolio site built with React, TypeScript, and Vite. It is designed to run locally for development and to be published as a static site on GitHub Pages.
-
-## Features
-
-- Responsive portfolio layout
-- Resume-style content sections
-- Static site generation for GitHub Pages
-- Local development server with frontend and backend support
-
-## Project Structure
-
-- `frontend/`: React frontend application
-- `backend/`: Node.js backend for proxy-related functionality
-- `.github/workflows/`: GitHub Actions workflow for publishing to GitHub Pages
+A public portfolio combining selected projects, work experience, an interactive career timeline, education highlights and a downloadable resume. Built with React, TypeScript and Vite; no backend or live GitHub API is required.
 
 ## Development
 
-Install dependencies:
+Use Node.js 20.19+ or 22.12+.
 
 ```bash
-npm install
-```
-
-Start the local development environment:
-
-```bash
+npm ci
 npm run dev
 ```
 
-Build the static production site:
+Validate and build:
 
 ```bash
+npm run typecheck
 npm run build
+npm run preview
 ```
 
-## GitHub Pages Deployment
+The static output is in `frontend/dist/`. Relative asset paths support GitHub Pages and other static hosts.
 
-The site is configured to build as a static app and publish to GitHub Pages.
+## Content
 
-1. Push changes to the `main` branch.
-2. Ensure GitHub Pages is enabled in the repository settings.
-3. Select the GitHub Actions deployment source.
-4. The workflow in `.github/workflows/deploy.yml` will publish the site automatically.
+Edit `frontend/data.ts` for experience, projects, education and career milestones; edit `frontend/App.tsx` for introductory copy. Replace `frontend/public/Karan_Goel_Resume.pdf` when updating the resume.
 
-## Notes
+Public claims were reconciled with the final resume and supporting records in October 2026. Keep individual ownership distinct from team projects. Add outcomes or metrics only when supported by evidence. Private career analysis and source records are kept outside this repository.
 
-The frontend build output is generated in `frontend/dist/` and is suitable for static hosting.
+## Deployment
+
+`.github/workflows/deploy.yml` installs dependencies and runs the production build (including the prebuild type check), then publishes to GitHub Pages on pushes to `master` or manual workflow dispatch. GitHub Pages must use GitHub Actions as its deployment source. Feature branches can be reviewed before merging to `master`.
