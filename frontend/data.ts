@@ -1,9 +1,9 @@
 import type { PortfolioData, CareerEvent } from "./types";
 
-// Public career copy reconciled with the final resume and user corrections, 22 Oct 2026.
+// Public career copy mirrored from builder/resume_content.json, 5 Nov 2026.
 export const portfolioData: PortfolioData = {
   name: "Karan Goel",
-  title: "Applied AI & Backend Engineer",
+  title: "AI Platform & Backend Systems Engineer",
   contact: {
     location: "Pune, India",
     phone: "+91 7988965091",
@@ -12,18 +12,19 @@ export const portfolioData: PortfolioData = {
     github: "https://github.com/karangoel59-dev",
   },
   summary:
-    "Software engineer building production LLM agents and Python backend systems at Chat360, following two years of full-time DevOps/SRE work at Cleartrip. Combines agent orchestration and retrieval with infrastructure, observability and billing.",
+    "Systems and AI engineer with 3+ years of production experience scaling high-concurrency cloud infrastructure at Cleartrip (Flipkart Group) and building agentic execution runtimes at Chat360. Works across multi-agent supervisor orchestration, concurrent tool execution, production vector search and multi-cluster Kubernetes—combining systems-level reliability (Go, Kubernetes, Terraform) with LLM runtime engineering.",
   skills: [
     {
-      category: "Backend",
+      category: "Backend & systems",
       skills: [
         "Python",
         "Go",
         "JavaScript/TypeScript",
+        "Bash",
         "SQL",
         "Django/DRF",
-        "asyncio",
         "Celery",
+        "asyncio",
         "REST APIs",
       ],
     },
@@ -32,12 +33,18 @@ export const portfolioData: PortfolioData = {
       skills: [
         "LangGraph",
         "LangChain",
-        "OpenAI/Azure OpenAI",
+        "Model Context Protocol (MCP)",
+        "OpenAI & Gemini APIs",
         "RAG",
+        "Prompt caching",
+        "Model fine-tuning",
         "Qdrant",
         "Pinecone",
         "PostgreSQL",
         "Redis",
+        "Elasticsearch",
+        "Vector indexing",
+        "Langfuse",
       ],
     },
     {
@@ -47,11 +54,12 @@ export const portfolioData: PortfolioData = {
         "Terraform",
         "Docker",
         "Kubernetes",
-        "Jenkins",
-        "GitHub Actions",
-        "Langfuse",
+        "Kafka",
+        "Debezium CDC",
         "ELK",
         "New Relic",
+        "Jenkins",
+        "GitHub Actions",
       ],
     },
   ],
@@ -63,12 +71,12 @@ export const portfolioData: PortfolioData = {
       startDate: "Mar 2026",
       endDate: "Present",
       highlights: [
-        "Enabled parallel tool execution in the agent runtime using thread pools; added token-aware conversation history truncation.",
-        "Implemented Pinecone-to-Qdrant migration APIs and batch transfer workflows; updated retrieval and vector-store integrations.",
-        "Built Club Mahindra’s Maya RAG pipeline, semantic resort search, live availability checks and resort-ID verification for booking workflows.",
-        "Implemented idempotent session-close billing reconciliation and optimized AI Insights data retrieval; added complexity-based routing to lighter models.",
-        "Migrated Langfuse tracing and callback handling across webhook and LangGraph supervisor paths.",
-        "Fixed DBHub cross-session writes and per-table save state; moved background synchronization to retryable Celery tasks.",
+        "Engineered concurrent multi-tool execution in the LangGraph supervisor runtime using thread pools; implemented dynamic token-budget context sliding windows to prevent context-window overflow.",
+        "Migrated the production vector database from Pinecone to Qdrant, building pooled client connections, scroll-based batch deletion, payload indexing, and schema-mapped retrieval pipelines.",
+        "Built the multi-turn RAG runtime for Club Mahindra’s Maya assistant, implementing semantic resort retrieval, real-time availability checks, resort-identifier validation, and prompt caching.",
+        "Designed idempotent session-close billing reconciliation to prevent credit leakage.",
+        "Implemented model routing that sends simpler turns to low-latency models; optimized analytical query paths.",
+        "Instrumented LLM observability on Langfuse v4 across async webhooks and LangGraph supervisor graphs, adding distributed trace propagation, environment tagging and token-cost telemetry.",
       ],
     },
     {
@@ -78,9 +86,9 @@ export const portfolioData: PortfolioData = {
       startDate: "Jun 2021",
       endDate: "Jun 2023",
       highlights: [
-        "Managed GCP/GKE infrastructure with Terraform; authored VPC design documentation for PCI/non-PCI networks, firewall rules, disaster recovery and observability.",
-        "Supported QA migration to GCP and deployment pipelines; tuned Elasticsearch for high-traffic sales and rolled out hotel-service Kibana logging.",
-        "Handled production on-call troubleshooting and cost optimization; integrated Snyk and set up Debezium.",
+        "Provisioned and maintained multi-cluster GCP/GKE platforms via modular Terraform; authored the production VPC design enforcing PCI-DSS segregation, egress firewall rules, cross-region DR and centralized monitoring.",
+        "Migrated multi-service QA environments to GCP; tuned Elasticsearch sharding, heap allocation and query caching for Flipkart Big Billion Days and airline Tatkal traffic peaks.",
+        "Shared production on-call rotations; deployed Debezium change-data-capture (CDC) pipelines for real-time Kafka event streaming, and embedded automated Snyk vulnerability scanning into CI/CD.",
       ],
     },
     {
@@ -90,7 +98,7 @@ export const portfolioData: PortfolioData = {
       startDate: "Mar 2020",
       endDate: "May 2021",
       highlights: [
-        "Automated deployments with shell scripts, supported QA/staging infrastructure and debugged DNS/HTTP connectivity; converted directly to full-time employment.",
+        "Automated staging deployment workflows using Bash scripts, resolved ingress DNS/HTTP routing failures across Kubernetes clusters, and maintained staging environments; earned direct full-time engineering conversion.",
       ],
     },
   ],
@@ -116,21 +124,21 @@ export const portfolioData: PortfolioData = {
     {
       title: "writehere-agents",
       date: "2026",
-      techStack: ["Python", "LLMs"],
+      techStack: ["Python", "Flask", "LLMs"],
       link: "https://github.com/karangoel59-dev/writehere-agents",
       category: "Agent tooling",
       description:
-        "A recursive DAG-based framework that turns a high-level prompt into structured subtasks and multi-section outputs.",
+        "An async Flask REST API with an LLM planner and executor around the open-source WriteHERE recursive-DAG engine (principia-ai), turning a high-level prompt into dependent subtasks and multi-section outputs.",
       status: "Archived",
     },
     {
       title: "Irrational Agents",
       date: "2024–2025",
-      techStack: ["Python", "LangChain", "Phaser", "Azure", "GCP"],
+      techStack: ["JavaScript", "Phaser", "Python", "LangChain", "Azure", "GCP"],
       link: "https://github.com/Irrational-Agents/Agents-Sandbox",
       category: "Team capstone",
       description:
-        "Led the simulation frontend and contributed the socket API, prompts and agent behavior/personality layer. A team MSc capstone, graded Distinction (80).",
+        "Owned the simulation frontend (Phaser/JavaScript) and the socket command API bridging it to the Python/LangChain agent backend; built the agent behaviour, personality and prompt layers. A team MSc capstone, graded Distinction (80).",
     },
     {
       title: "Signature-forgery detection",
@@ -159,7 +167,7 @@ export const portfolioData: PortfolioData = {
       startDate: "Jul 2023",
       endDate: "Jul 2025",
       detail:
-        "Major: Machine Learning and Big Data and Software Engineering · WAM 71.7. High Distinctions: Programming & Data Structures (93), Web Development (91).",
+        "Major: Machine Learning & Big Data, Software Engineering · High Distinctions: Programming & Data Structures (93), Web Development (91).",
     },
     {
       degree: "Bachelor of Engineering — Computer Science & Engineering",
@@ -216,7 +224,7 @@ export const careerEvents: CareerEvent[] = [
     dates: "2024 – 2025",
     subtitle: "Irrational Agents · Team MSc capstone",
     description:
-      "Led the simulation frontend and contributed APIs, prompts and agent behavior/personality features. Graded Distinction (80).",
+      "Owned the simulation frontend and the socket command API to the agent backend; built the agent behaviour, personality and prompt layers. Graded Distinction (80).",
   },
   {
     year: "2026",
