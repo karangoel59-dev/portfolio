@@ -2,7 +2,7 @@ import type { Project } from "../types";
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="project-card">
+    <article className={`project-card${project.featured ? " featured" : ""}`}>
       <div className="project-meta">
         <span>{project.category}</span>
         <span>{project.date}</span>
@@ -13,7 +13,8 @@ export function ProjectCard({ project }: { project: Project }) {
           <span aria-hidden="true">↗</span>
         </a>
       </h3>
-      <p>{project.description}</p>
+      {project.badge && <p className="project-badge">{project.badge}</p>}
+      <p className="project-description">{project.description}</p>
       <div className="chips">
         {project.techStack.map((tech) => (
           <span className="chip" key={tech}>

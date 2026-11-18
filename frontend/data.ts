@@ -33,7 +33,7 @@ export const portfolioData: PortfolioData = {
       ],
     },
     {
-      category: "AI & data",
+      category: "AI & LLM",
       skills: [
         "LangGraph",
         "LangChain",
@@ -43,14 +43,21 @@ export const portfolioData: PortfolioData = {
         "Prompt caching",
         "LLM-as-judge evaluation",
         "Model fine-tuning",
+        "Langfuse",
+        "Claude Code",
+      ],
+    },
+    {
+      category: "Data & retrieval",
+      skills: [
         "Qdrant",
         "Pinecone",
+        "Vector indexing",
         "PostgreSQL",
         "Redis",
         "Elasticsearch",
-        "Vector indexing",
-        "Langfuse",
-        "Claude Code",
+        "Kafka",
+        "Debezium CDC",
       ],
     },
     {
@@ -60,8 +67,6 @@ export const portfolioData: PortfolioData = {
         "Terraform",
         "Docker",
         "Kubernetes",
-        "Kafka",
-        "Debezium CDC",
         "ELK/Kibana",
         "New Relic",
         "Jenkins",
@@ -79,13 +84,15 @@ export const portfolioData: PortfolioData = {
       location: "Pune, India",
       startDate: "Mar 2026",
       endDate: "Present",
+      lead: "Agent runtime, retrieval, billing and tracing for production LLM agents.",
+      stack: ["Python", "LangGraph", "Qdrant", "Langfuse", "Django", "GoCD"],
       highlights: [
         "Engineered concurrent multi-tool execution with thread pools in a LangGraph supervisor runtime that routes work between sub-agents; implemented dynamic token-budget context sliding windows to prevent context-window overflow.",
-        "Migrated the production vector database from Pinecone to Qdrant, making many of its technical decisions: pooled client connections, scroll-based batch deletion, payload indexing, schema-mapped retrieval.",
         "Built the multi-turn RAG runtime for Club Mahindra’s Maya assistant: semantic resort retrieval, real-time availability checks, a hallucination guard on model-produced resort identifiers, and prompt caching; presented its design on-site.",
+        "Instrumented Langfuse v4 tracing across async webhooks and LangGraph supervisor graphs (trace propagation, environment tagging, token-cost telemetry), adopted by other engineers; scored output with LLM-as-judge and manual QA.",
+        "Migrated the production vector database from Pinecone to Qdrant, making many of its technical decisions: pooled client connections, scroll-based batch deletion, payload indexing, schema-mapped retrieval.",
         "Designed idempotent session-close billing reconciliation to prevent credit leakage.",
         "Implemented model routing that sends simpler turns to low-latency models; optimized analytical query paths.",
-        "Instrumented Langfuse v4 tracing across async webhooks and LangGraph supervisor graphs (trace propagation, environment tagging, token-cost telemetry), adopted by other engineers; scored output with LLM-as-judge and manual QA.",
         "Introduced uv and GoCD into infrastructure tooling; review teammates’ code, mentor engineers and design new features.",
       ],
     },
@@ -95,6 +102,8 @@ export const portfolioData: PortfolioData = {
       location: "Bangalore, India",
       startDate: "Jun 2021",
       endDate: "Jun 2023",
+      lead: "Multi-cluster GCP/GKE platforms, network design and production operations.",
+      stack: ["GCP/GKE", "Terraform", "Kubernetes", "Elasticsearch", "Kafka", "Snyk"],
       highlights: [
         "Provisioned and maintained multi-cluster GCP/GKE platforms via modular Terraform; authored the production VPC design enforcing PCI-DSS segregation, egress firewall rules, cross-region DR and centralized monitoring.",
         "Migrated multi-service QA environments to GCP; tuned Elasticsearch sharding, heap allocation and query caching for Flipkart Big Billion Days and airline Tatkal traffic peaks.",
@@ -108,6 +117,7 @@ export const portfolioData: PortfolioData = {
       location: "Bangalore, India",
       startDate: "Mar 2020",
       endDate: "May 2021",
+      stack: ["Bash", "Kubernetes"],
       highlights: [
         "Automated staging deployments with Bash scripts, resolved Kubernetes ingress DNS/HTTP routing failures and maintained staging environments; converted directly to full-time.",
       ],
@@ -120,6 +130,8 @@ export const portfolioData: PortfolioData = {
       techStack: ["Go", "MCP"],
       link: "https://github.com/karangoel59-dev/kgmail",
       category: "Agent tooling",
+      featured: true,
+      badge: "Adopted by other users",
       description:
         "A multi-account email manager with a native Go MCP server so coding agents can use it. Distributed through Homebrew and adopted by other users.",
     },
@@ -129,6 +141,7 @@ export const portfolioData: PortfolioData = {
       techStack: ["Go", "CLI"],
       link: "https://github.com/karangoel59-dev/kgssh",
       category: "Developer tools",
+      badge: "Adopted by other users",
       description:
         "An SSH connection launcher for working across remote machines. Distributed through Homebrew and adopted by other users.",
     },
@@ -166,6 +179,8 @@ export const portfolioData: PortfolioData = {
       techStack: ["JavaScript", "Phaser", "Python", "LangChain", "Azure", "GCP"],
       link: "https://github.com/Irrational-Agents/Agents-Sandbox",
       category: "Team capstone",
+      featured: true,
+      badge: "Distinction (80)",
       description:
         "Owned the simulation frontend (Phaser/JavaScript) and the socket command API bridging it to the Python/LangChain agent backend; built the agent behaviour, personality and prompt layers. A team MSc capstone, graded Distinction (80).",
     },
