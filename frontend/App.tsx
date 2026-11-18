@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { portfolioData as data, careerEvents } from "./data";
 import { Section } from "./components/Section";
 import { ExperienceCard } from "./components/ExperienceCard";
 import { ProjectCard } from "./components/ProjectCard";
+import { ThemeToggle } from "./components/ThemeToggle";
 import "./site.css";
 
 const nav = [
@@ -12,8 +13,36 @@ const nav = [
   ["education", "Education"],
 ] as const;
 
+// Highlights the nav link of the section currently in view.
+function useActiveSection(ids: readonly string[]) {
+  const [active, setActive] = useState<string | null>(null);
+  useEffect(() => {
+    if (!("IntersectionObserver" in window)) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        }
+      },
+      { rootMargin: "-45% 0px -50% 0px" },
+    );
+    for (const id of ids) {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    }
+    return () => observer.disconnect();
+  }, [ids]);
+  return active;
+}
+
+const navIds = nav.map(([id]) => id);
+const featured = data.projects.filter((p) => p.featured);
+const others = data.projects.filter((p) => !p.featured);
+const current = data.experience.find((e) => e.endDate === "Present");
+
 export default function App() {
   const [selectedEvent, setSelectedEvent] = useState(careerEvents.length - 1);
+  const activeSection = useActiveSection(navIds);
   const event = careerEvents[selectedEvent];
   const resumeUrl = `${import.meta.env.BASE_URL}Karan_Goel_Resume.pdf`;
   return (
@@ -27,14 +56,21 @@ export default function App() {
         </a>
         <nav aria-label="Main navigation">
           {nav.map(([id, label]) => (
-            <a key={id} href={`#${id}`}>
+            <a
+              key={id}
+              href={`#${id}`}
+              aria-current={activeSection === id ? "location" : undefined}
+            >
               {label}
             </a>
           ))}
         </nav>
-        <a className="header-contact" href={`mailto:${data.contact.email}`}>
-          Let’s talk <span aria-hidden="true">↗</span>
-        </a>
+        <div className="header-actions">
+          <ThemeToggle />
+          <a className="header-contact" href={`mailto:${data.contact.email}`}>
+            Let’s talk <span aria-hidden="true">↗</span>
+          </a>
+        </div>
       </header>
       <main id="main">
         <section className="hero" id="top" aria-labelledby="hero-title">
@@ -64,6 +100,12 @@ export default function App() {
             <p className="hero-location">
               Pune, India <span>·</span> Open to global relocation
             </p>
+            {current && (
+              <p className="hero-now">
+                <span className="status-dot" aria-hidden="true" />
+                Now: {current.title} at {current.company.split(" (")[0]}
+              </p>
+            )}
           </div>
           <div className="system-visual" aria-hidden="true">
             <div className="orbit orbit-one" />
@@ -111,8 +153,14 @@ export default function App() {
           title="Selected projects"
           description="Tools, experiments and earlier work you can explore."
         >
+          <div className="projects-featured">
+            {featured.map((project) => (
+              <ProjectCard key={project.title} project={project} />
+            ))}
+          </div>
+          <h3 className="projects-subhead">More projects</h3>
           <div className="projects-grid">
-            {data.projects.map((project) => (
+            {others.map((project) => (
               <ProjectCard key={project.title} project={project} />
             ))}
           </div>
@@ -248,7 +296,7 @@ export default function App() {
         <span>
           © {new Date().getFullYear()} {data.name}
         </span>
-        <span>Applied AI · Backend · Infrastructure</span>
+        <span>AI platform · Backend · Infrastructure</span>
         <a href="#top">Back to top ↑</a>
       </footer>
     </>
