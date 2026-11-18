@@ -4,6 +4,10 @@ export interface Experience {
   location: string;
   startDate: string;
   endDate: string;
+  /** One-line summary shown above the highlights. */
+  lead?: string;
+  /** Main tools for the role, shown as chips. */
+  stack?: string[];
   highlights: string[];
 }
 export interface Project {
@@ -14,6 +18,10 @@ export interface Project {
   category: string;
   description: string;
   status?: string;
+  /** Shown in the larger top row of the projects section. */
+  featured?: boolean;
+  /** Short evidence-backed callout, e.g. "Adopted by other users". */
+  badge?: string;
 }
 export interface PortfolioData {
   name: string;
