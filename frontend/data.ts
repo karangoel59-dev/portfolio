@@ -1,6 +1,8 @@
 import type { PortfolioData, CareerEvent } from "./types";
 
-// Public career copy mirrored from builder/resume_content.json, 5 Nov 2026.
+// Public career copy mirrored from builder/resume_content.json, 18 Nov 2026.
+// The site lists a few items the one-page PDF has no room for (Vault/Secret Manager,
+// forward-flow, caddy-mcp-gateway, extra tools); all are user-confirmed.
 export const portfolioData: PortfolioData = {
   name: "Karan Goel",
   title: "AI Platform & Backend Systems Engineer",
@@ -12,7 +14,7 @@ export const portfolioData: PortfolioData = {
     github: "https://github.com/karangoel59-dev",
   },
   summary:
-    "Systems and AI engineer with 3+ years of production experience scaling high-concurrency cloud infrastructure at Cleartrip (Flipkart Group) and building agentic execution runtimes at Chat360. Works across multi-agent supervisor orchestration, concurrent tool execution, production vector search and multi-cluster Kubernetes—combining systems-level reliability (Go, Kubernetes, Terraform) with LLM runtime engineering.",
+    "Systems and AI engineer with 3+ years of production experience across cloud infrastructure at Cleartrip (Flipkart Group) and agentic runtimes at Chat360: multi-agent supervisor orchestration, concurrent tool execution, production vector search and multi-cluster Kubernetes, combining systems reliability (Go, Kubernetes, Terraform) with LLM runtime engineering.",
   skills: [
     {
       category: "Backend & systems",
@@ -26,6 +28,8 @@ export const portfolioData: PortfolioData = {
         "Celery",
         "asyncio",
         "REST APIs",
+        "ASGI (Gunicorn/Uvicorn)",
+        "Rust",
       ],
     },
     {
@@ -37,6 +41,7 @@ export const portfolioData: PortfolioData = {
         "OpenAI & Gemini APIs",
         "RAG",
         "Prompt caching",
+        "LLM-as-judge evaluation",
         "Model fine-tuning",
         "Qdrant",
         "Pinecone",
@@ -45,6 +50,7 @@ export const portfolioData: PortfolioData = {
         "Elasticsearch",
         "Vector indexing",
         "Langfuse",
+        "Claude Code",
       ],
     },
     {
@@ -56,10 +62,13 @@ export const portfolioData: PortfolioData = {
         "Kubernetes",
         "Kafka",
         "Debezium CDC",
-        "ELK",
+        "ELK/Kibana",
         "New Relic",
         "Jenkins",
+        "GoCD",
         "GitHub Actions",
+        "Snyk",
+        "uv",
       ],
     },
   ],
@@ -71,12 +80,13 @@ export const portfolioData: PortfolioData = {
       startDate: "Mar 2026",
       endDate: "Present",
       highlights: [
-        "Engineered concurrent multi-tool execution in the LangGraph supervisor runtime using thread pools; implemented dynamic token-budget context sliding windows to prevent context-window overflow.",
-        "Migrated the production vector database from Pinecone to Qdrant, building pooled client connections, scroll-based batch deletion, payload indexing, and schema-mapped retrieval pipelines.",
-        "Built the multi-turn RAG runtime for Club Mahindra’s Maya assistant, implementing semantic resort retrieval, real-time availability checks, resort-identifier validation, and prompt caching.",
+        "Engineered concurrent multi-tool execution with thread pools in a LangGraph supervisor runtime that routes work between sub-agents; implemented dynamic token-budget context sliding windows to prevent context-window overflow.",
+        "Migrated the production vector database from Pinecone to Qdrant, making many of its technical decisions: pooled client connections, scroll-based batch deletion, payload indexing, schema-mapped retrieval.",
+        "Built the multi-turn RAG runtime for Club Mahindra’s Maya assistant: semantic resort retrieval, real-time availability checks, a hallucination guard on model-produced resort identifiers, and prompt caching; presented its design on-site.",
         "Designed idempotent session-close billing reconciliation to prevent credit leakage.",
         "Implemented model routing that sends simpler turns to low-latency models; optimized analytical query paths.",
-        "Instrumented LLM observability on Langfuse v4 across async webhooks and LangGraph supervisor graphs, adding distributed trace propagation, environment tagging and token-cost telemetry.",
+        "Instrumented Langfuse v4 tracing across async webhooks and LangGraph supervisor graphs (trace propagation, environment tagging, token-cost telemetry), adopted by other engineers; scored output with LLM-as-judge and manual QA.",
+        "Introduced uv and GoCD into infrastructure tooling; review teammates’ code, mentor engineers and design new features.",
       ],
     },
     {
@@ -88,7 +98,8 @@ export const portfolioData: PortfolioData = {
       highlights: [
         "Provisioned and maintained multi-cluster GCP/GKE platforms via modular Terraform; authored the production VPC design enforcing PCI-DSS segregation, egress firewall rules, cross-region DR and centralized monitoring.",
         "Migrated multi-service QA environments to GCP; tuned Elasticsearch sharding, heap allocation and query caching for Flipkart Big Billion Days and airline Tatkal traffic peaks.",
-        "Shared production on-call rotations; deployed Debezium change-data-capture (CDC) pipelines for real-time Kafka event streaming, and embedded automated Snyk vulnerability scanning into CI/CD.",
+        "Shared production on-call and set up Kibana logging across hotel microservices; deployed Debezium change-data-capture (CDC) pipelines for real-time Kafka streaming; embedded Snyk vulnerability scanning into CI/CD.",
+        "Worked on a HashiCorp Vault proof of concept before the team moved secrets to Google Secret Manager.",
       ],
     },
     {
@@ -98,7 +109,7 @@ export const portfolioData: PortfolioData = {
       startDate: "Mar 2020",
       endDate: "May 2021",
       highlights: [
-        "Automated staging deployment workflows using Bash scripts, resolved ingress DNS/HTTP routing failures across Kubernetes clusters, and maintained staging environments; earned direct full-time engineering conversion.",
+        "Automated staging deployments with Bash scripts, resolved Kubernetes ingress DNS/HTTP routing failures and maintained staging environments; converted directly to full-time.",
       ],
     },
   ],
@@ -110,7 +121,7 @@ export const portfolioData: PortfolioData = {
       link: "https://github.com/karangoel59-dev/kgmail",
       category: "Agent tooling",
       description:
-        "A multi-account email manager with a native Go MCP server. Distributed through Homebrew.",
+        "A multi-account email manager with a native Go MCP server so coding agents can use it. Distributed through Homebrew and adopted by other users.",
     },
     {
       title: "kgssh",
@@ -119,7 +130,25 @@ export const portfolioData: PortfolioData = {
       link: "https://github.com/karangoel59-dev/kgssh",
       category: "Developer tools",
       description:
-        "An SSH connection launcher for working across remote machines. Distributed through Homebrew.",
+        "An SSH connection launcher for working across remote machines. Distributed through Homebrew and adopted by other users.",
+    },
+    {
+      title: "caddy-mcp-gateway",
+      date: "2026",
+      techStack: ["Caddy", "Python", "MCP"],
+      link: "https://github.com/karangoel59-dev/caddy-mcp-gateway",
+      category: "Agent tooling",
+      description:
+        "Serves several MCP servers behind one HTTPS hostname, with Caddy config and a small Python helper.",
+    },
+    {
+      title: "forward-flow",
+      date: "2026",
+      techStack: ["Rust", "TypeScript"],
+      link: "https://github.com/karangoel59-dev/forward-flow",
+      category: "Writing tools",
+      description:
+        "An append-only writing app: an editor that only moves forward, plus a viewer for sorting, tagging and linking notes.",
     },
     {
       title: "writehere-agents",
@@ -152,11 +181,11 @@ export const portfolioData: PortfolioData = {
     {
       title: "Early work archive",
       date: "2018–2020",
-      techStack: ["C++", "TypeScript", "React"],
+      techStack: ["C++", "TypeScript", "Node.js", "React"],
       link: "https://github.com/karangoel59-dev/early-work-archive",
       category: "Code archive",
       description:
-        "Recovered student projects: C++ game engines and BFS pathfinding, web APIs, a Messenger booking bot, and early Docker/Jenkins work.",
+        "Recovered student projects: C++ game engines and BFS pathfinding, Node.js/Express and GraphQL APIs, React apps, a Messenger booking bot, and early Docker/Jenkins work.",
       status: "Archived",
     },
   ],
@@ -167,7 +196,7 @@ export const portfolioData: PortfolioData = {
       startDate: "Jul 2023",
       endDate: "Jul 2025",
       detail:
-        "Major: Machine Learning & Big Data, Software Engineering · High Distinctions: Programming & Data Structures (93), Web Development (91).",
+        "Majors: Machine Learning & Big Data, Software Engineering · High Distinctions: Programming & Data Structures (93), Web Development (91).",
     },
     {
       degree: "Bachelor of Engineering — Computer Science & Engineering",
@@ -233,6 +262,6 @@ export const careerEvents: CareerEvent[] = [
     dates: "Mar 2026 – Present",
     subtitle: "Agentic AI Engineer · Chat360",
     description:
-      "Builds agent runtime features, retrieval integrations, billing, tracing and reliable backend workflows.",
+      "Builds multi-agent runtime features, retrieval, billing and tracing that other engineers adopt; reviews code and mentors engineers.",
   },
 ];
